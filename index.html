@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="studio-blue">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a202c" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>EQ - RTA (Pro)</title>
+  <style>
+    /* --- Theme: Dark Matter --- */
+    :root, [data-theme="dark-matter"]{
+      --bg1:#1a202c; --bg2:#1a202c; --card:#2d3748; --text:#cbd5e1; --muted:#718096;
+      --gridH:rgba(255,255,255,.08); --gridV:rgba(255,255,255,.04);
+      --frame:rgba(255,255,255,.1); --label:rgba(255,255,255,.85);
+      --fft:#68d391; --peak:#b794f4; --hold:#f6ad55; --bar:#68d391;
+      --heatmap-color-1:#1a202c; --heatmap-color-2:#4a5568; --heatmap-color-3:#68d391;
+      --heatmap-color-4:#f6ad55; --heatmap-color-5:#e53e3e;
+      --dba-meter-bg-green:#48bb78; --dba-meter-bg-yellow:#f6ad55;
+      --dba-meter-bg-orange:#ed8936; --dba-meter-bg-red:#e53e3e;
+      --accent-color:#2DD4BF;
+
+      /* dropdown tones */
+      --select-bg:rgba(0,0,0,.28);
+      --select-bg-hover:rgba(255,255,255,.06);
+      --select-border:rgba(255,255,255,.14);
+      --select-border-focus:rgba(45,212,191,.65);
+      --select-shadow:0 2px 8px rgba(0,0,0,.35) inset, 0 0 0 0 rgba(0,0,0,0);
+      --select-shadow-focus:0 0 0 2px rgba(45,212,191,.25);
+    }
+
+    /* --- Theme: Studio Blue (default) --- */
+    [data-theme="studio-blue"]{
+      --bg1:#0F172A; --bg2:#1E293B; --card:#1E293B; --text:#E2E8F0; --muted:#64748B;
+      --gridH:rgba(255,255,255,.10); --gridV:rgba(255,255,255,.05);
+      --frame:rgba(255,255,255,.12); --label:rgba(255,255,255,.90);
+      --fft:#22D3EE; --peak:#A5B4FC; --hold:#F472B6; --bar:#22D3EE;
+      --heatmap-color-1:#0F172A; --heatmap-color-2:#334155; --heatmap-color-3:#0EA5E9;
+      --heatmap-color-4:#A78BFA; --heatmap-color-5:#F472B6;
+      --dba-meter-bg-green:#22D3EE; --dba-meter-bg-yellow:#A78BFA;
+      --dba-meter-bg-orange:#EC4899; --dba-meter-bg-red:#F43F5E;
+      --accent-color:#60A5FA;
+
+      /* dropdown tones */
+      --select-bg:rgba(30,41,59,.55);
+      --select-bg-hover:rgba(30,41,59,.75);
+      --select-border:rgba(255,255,255,.16);
+      --select-border-focus:rgba(96,165,250,.7);
+      --select-shadow:0 2px 8px rgba(0,0,0,.35) inset, 0 0 0 0 rgba(0,0,0,0);
+      --select-shadow-focus:0 0 0 2px rgba(96,165,250,.25);
+    }
+
+    /* --- Theme: Vintage Amber --- */
+    [data-theme="vintage-amber"]{
+      --bg1:#292524; --bg2:#1c1917; --card:#44403C; --text:#D6D3D1; --muted:#A8A29E;
+      --gridH:rgba(255,250,235,.10); --gridV:rgba(255,250,235,.05);
+      --frame:rgba(255,250,235,.12); --label:rgba(255,255,255,.90);
+      --fft:#F59E0B; --peak:#FDE68A; --hold:#FDBA74; --bar:#F59E0B;
+      --heatmap-color-1:#292524; --heatmap-color-2:#78716C; --heatmap-color-3:#F59E0B;
+      --heatmap-color-4:#FBBF24; --heatmap-color-5:#EF4444;
+      --dba-meter-bg-green:#F59E0B; --dba-meter-bg-yellow:#FACC15;
+      --dba-meter-bg-orange:#FB923C; --dba-meter-bg-red:#EF4444;
+      --accent-color:#D97706;
+
+      /* dropdown tones */
+      --select-bg:rgba(0,0,0,.28);
+      --select-bg-hover:rgba(255,255,255,.06);
+      --select-border:rgba(255,250,235,.18);
+      --select-border-focus:rgba(217,119,6,.7);
+      --select-shadow:0 2px 8px rgba(0,0,0,.35) inset, 0 0 0 0 rgba(0,0,0,0);
+      --select-shadow-focus:0 0 0 2px rgba(217,119,6,.25);
+    }
+    
+    /* --- Theme: Midnight Neon --- */
+    [data-theme="midnight-neon"]{
+      --bg1:#0B0914; --bg2:#120F22; --card:#1C1933; --text:#D8D3F5; --muted:#7A759C;
+      --gridH:rgba(220, 210, 255, .08); --gridV:rgba(220, 210, 255, .04);
+      --frame:rgba(220, 210, 255, .12); --label:rgba(220, 210, 255, .90);
+      --fft:#F43F5E; --peak:#0CF1E5; --hold:#FBBF24; --bar:#F43F5E;
+      --heatmap-color-1:#0B0914; --heatmap-color-2:#3D3A63; --heatmap-color-3:#BE3887;
+      --heatmap-color-4:#F43F5E; --heatmap-color-5:#FBBF24;
+      --dba-meter-bg-green:#0CF1E5; --dba-meter-bg-yellow:#FBBF24;
+      --dba-meter-bg-orange:#F43F5E; --dba-meter-bg-red:#f43f82;
+      --accent-color:#0CF1E5;
+
+      /* dropdown tones */
+      --select-bg:rgba(12, 10, 30, .55);
+      --select-bg-hover:rgba(12, 10, 30, .75);
+      --select-border:rgba(220, 210, 255, .18);
+      --select-border-focus:rgba(12, 241, 229, .7);
+      --select-shadow:0 2px 8px rgba(0,0,0,.35) inset, 0 0 0 0 rgba(0,0,0,0);
+      --select-shadow-focus:0 0 0 2px rgba(12, 241, 229, .25);
+    }
+
+    /* --- Theme: Emerald Gold --- */
+    [data-theme="emerald-gold"]{
+      --bg1:#0F1D1A; --bg2:#0A1412; --card:#1A2C28; --text:#E2E8F0; --muted:#8A9A95;
+      --gridH:rgba(200, 220, 210, .08); --gridV:rgba(200, 220, 210, .04);
+      --frame:rgba(200, 220, 210, .12); --label:rgba(226, 232, 240, .90);
+      --fft:#10B981; --peak:#F59E0B; --hold:#FDE047; --bar:#10B981;
+      --heatmap-color-1:#0F1D1A; --heatmap-color-2:#2F574D; --heatmap-color-3:#10B981;
+      --heatmap-color-4:#F59E0B; --heatmap-color-5:#EF4444;
+      --dba-meter-bg-green:#10B981; --dba-meter-bg-yellow:#F59E0B;
+      --dba-meter-bg-orange:#FB923C; --dba-meter-bg-red:#EF4444;
+      --accent-color:#F59E0B;
+
+      /* dropdown tones */
+      --select-bg:rgba(10, 20, 18, .55);
+      --select-bg-hover:rgba(10, 20, 18, .75);
+      --select-border:rgba(200, 220, 210, .18);
+      --select-border-focus:rgba(245, 158, 11, .7);
+      --select-shadow:0 2px 8px rgba(0,0,0,.35) inset, 0 0 0 0 rgba(0,0,0,0);
+      --select-shadow-focus:0 0 0 2px rgba(245, 158, 11, .25);
+    }
+
+    :root{ color-scheme:dark }
+    html{ background:var(--bg1) }
+    body{
+      margin:0; height:100%;
+      background:radial-gradient(1200px 600px at 70% -10%, var(--card) 10%, var(--bg1) 60%, var(--bg2) 100%);
+      color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans Thai",sans-serif;
+      -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; overscroll-behavior:contain;
+      transition: background .3s, color .3s;
+     overflow-x:hidden;}
+
+    /* Safe area */
+    body::before,body::after{content:"";position:fixed;left:0;right:0;z-index:9999;background:var(--bg1);pointer-events:none}
+    body::before{top:0;height:env(safe-area-inset-top)} body::after{bottom:0;height:env(safe-area-inset-bottom)}
+    @supports(padding: env(safe-area-inset-left)){
+      html::before,html::after{content:"";position:fixed;top:0;bottom:0;background:var(--bg1);z-index:9998;pointer-events:none}
+      html::before{left:0;width:env(safe-area-inset-left)} html::after{right:0;width:env(safe-area-inset-right)}
+    }
+
+    .wrap{display:flex;flex-direction:column;gap:12px;max-width:920px;margin:0 auto;
+      padding-left:calc(12px + env(safe-area-inset-left));
+      padding-right:calc(12px + env(safe-area-inset-right));
+      padding-top:calc(12px + env(safe-area-inset-top));
+      padding-bottom:calc(12px + env(safe-area-inset-bottom));
+    }
+    .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:12px; transition: background-color .3s, border-color .3s;}
+
+    /* === toolbar (มุมขวาบนของการ์ด) === */
+    .toolbar{display:flex; align-items:center; gap:12px;}
+    .toolbar .stack{display:flex; align-items:center; gap:8px;}
+    .toolbar label{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted)}
+    .toolbar input[type="range"]{ width:140px; vertical-align:middle; }
+
+    .icon-btn{ width:36px; height:32px; padding:0; display:inline-flex; align-items:center; justify-content:center;
+      border-radius:10px; font-size:16px; line-height:1; background:rgba(0,0,0,.2); border:1px solid rgba(255,255,255,.12); color:var(--text);}
+    .icon-btn svg{ width:20px; height:20px; pointer-events:none; display:block; }
+    .icon-btn[data-active="1"]{ outline:1px solid rgba(255,255,255,.18); }
+
+    @media (max-width:480px){
+      .toolbar input[type="range"]{ width:110px; }
+      .icon-btn{ width:34px; height:30px; }
+    }
+
+    button,select,input[type=range],input[type=number]{-webkit-tap-highlight-color:transparent}
+    button{background:var(--accent-color);border:none;color:white;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:background-color .2s, opacity .2s;}
+    button:disabled{opacity:.5;cursor:not-allowed;}
+    button.secondary{background:rgba(0,0,0,.2);} button.ghost{background:rgba(0,0,0,.2);}
+    label{font-size:12px;color:var(--muted)}
+
+    /* ===== Themed SELECT (ทุกดรอปดาวน์) ===== */
+    select, input[type=number]{
+      -webkit-appearance:none; -moz-appearance:none; appearance:none;
+      height:30px; 
+      min-width:0;
+      padding:0 8px;
+      border-radius:8px;
+      background:var(--select-bg);
+      color:var(--text);
+      border:1px solid var(--select-border);
+      box-shadow:var(--select-shadow);
+      outline:none;
+      transition:background .2s,border-color .2s,box-shadow .2s;
+    }
+    select:hover, input[type=number]:hover{ background:var(--select-bg-hover); }
+    select:focus, input[type=number]:focus{ border-color:var(--select-border-focus); box-shadow:var(--select-shadow-focus); }
+    select:disabled, input[type=number]:disabled{ opacity:.6; cursor:not-allowed; }
+
+    /* ลูกศรแบบระบบ (คงไว้) + ระยะขอบขวาให้เสมอ */
+    select{ padding:0 24px 0 8px; }
+    select::-ms-expand{ display:none; }
+
+    /* สีของรายการในดรอปดาวน์ให้ไปตามธีม */
+    select option, select optgroup{
+      background:var(--card);
+      color:var(--text);
+    }
+     input[type=number] { -moz-appearance:textfield; }
+     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+
+    .meters{display:grid;grid-template-columns:1fr;gap:12px}
+    canvas{width:100%;height:320px;background:var(--bg1);border-radius:12px;touch-action:none; display:block; transition: background-color .3s;}
+
+    #dbMeterContainer{position:relative;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden}
+    #dbMeterCanvas{height:20px;background:transparent;border-radius:999px}
+    .dbLabel{position:absolute;font-size:10px;color:var(--muted);bottom:4px}
+
+    .hint{font-size:12px;color:var(--muted)}
+    .badges{display:flex;justify-content:center;gap:6px;flex:1}
+    .badge{padding:4px 8px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);font-size:12px;color:#e5e7eb;white-space:nowrap}
+    .tip{position:absolute;padding:4px 6px;font-size:12px;color:#e5e7eb;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:8px;transform:translate(-50%,-100%);pointer-events:none;white-space:nowrap;z-index:10}
+    .plot{position:relative;height:320px;margin-top:8px}
+
+    .values-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;}
+    .kv-item{flex:1;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;text-align:center}
+    .kv-item b{display:block;color:var(--text);font-size:12px;margin-bottom:4px; font-weight:normal; color:var(--muted);}
+    .kv-item span{ font-size:18px; font-weight:600; color:var(--text); }
+    input[type="range"], input[type="checkbox"]{accent-color:var(--accent-color)}
+
+    /* fullscreen fallback */
+    .card.is-fullscreen{
+  position:fixed;
+  left:env(safe-area-inset-left);
+  right:env(safe-area-inset-right);
+  top:env(safe-area-inset-top);
+  bottom:env(safe-area-inset-bottom);
+  z-index:9999;
+  margin:0;
+  border-radius:0;
+  overflow:clip;
+  padding-left:calc(12px + env(safe-area-inset-left));
+  padding-right:calc(12px + env(safe-area-inset-right));
+  padding-top:calc(12px + env(safe-area-inset-top));
+  padding-bottom:calc(12px + env(safe-area-inset-bottom));
+}
+    .card.is-fullscreen .plot{height:calc(100dvh - 120px)}
+    :fullscreen .plot{height:calc(100dvh - 120px)}
+    :fullscreen canvas, .card.is-fullscreen canvas{height:100%!important}
+
+    /* Floating command dock */
+    .float-dock{
+      position:fixed;
+      left:calc(8px + env(safe-area-inset-left));
+      top:50%;
+      transform:translateY(-50%);
+      display:flex; flex-direction:column; gap:10px;
+      z-index:10000;
+    }
+    .float-dock .fab{
+      width:44px; height:44px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px; color:#e5e7eb; font-size:20px;
+      box-shadow:0 10px 24px rgba(0,0,0,.25);
+      cursor:pointer;
+      transition:transform .08s ease, opacity .2s ease, background .2s ease;
+    }
+    .float-dock .fab:active{ transform:scale(.96); }
+    .float-dock .fab:disabled{ opacity:.55; cursor:not-allowed; }
+    .float-dock .fab[aria-pressed="true"]{ background:var(--accent-color); color:#fff; }
+    @media (max-width:480px){
+      .float-dock .fab{ width:40px; height:40px; font-size:18px; }
+    }
+  
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(0,0,0,.85);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font: 14px system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans';
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+      z-index: 9999;
+      box-shadow: 0 6px 20px rgba(0,0,0,.35);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    /* Calibration controls */
+    .calibration-control .ghost {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        font-size: 18px;
+        line-height: 1;
+        border-radius: 8px;
+    }
+
+    /* --- Mobile Landscape Fullscreen Fix --- */
+    @media (max-width: 920px) and (orientation: landscape) {
+      .card.is-fullscreen, :fullscreen {
+        display: flex;
+        flex-direction: column;
+        top: env(safe-area-inset-top);
+        left: env(safe-area-inset-left);
+        right: env(safe-area-inset-right);
+        bottom: env(safe-area-inset-bottom);
+        width: auto;
+        height: auto;
+        padding: 12px;
+        padding-top: 8px;
+        box-sizing: border-box;
+      }
+      .card.is-fullscreen > .row:first-child {
+          flex-shrink: 0;
+      }
+      .card.is-fullscreen .plot, :fullscreen .plot {
+        flex-grow: 1;
+        height: auto;
+        min-height: 0;
+      }
+    }
+
+  
+    @media all and (display-mode: standalone){
+      html, body { overflow-x:hidden; }
+    }
+    
+/* PWA overflow guard overrides */
+.card.is-fullscreen{
+  position:fixed;
+  left:env(safe-area-inset-left);
+  right:env(safe-area-inset-right);
+  top:env(safe-area-inset-top);
+  bottom:env(safe-area-inset-bottom);
+  z-index:9999;
+  margin:0;
+  border-radius:0;
+  overflow:clip;
+  padding-left:calc(12px + env(safe-area-inset-left));
+  padding-right:calc(12px + env(safe-area-inset-right));
+  padding-top:calc(12px + env(safe-area-inset-top));
+  padding-bottom:calc(12px + env(safe-area-inset-bottom));
+}
+:fullscreen .plot, .card.is-fullscreen .plot{ height: calc(100dvh - 120px) !important; }
+
+/* PWA standalone overflow guard (round 2) */
+@media all and (display-mode: standalone){
+  html, body{ overflow-x:hidden; }
+  .toolbar{ flex-wrap:wrap; }
+  .badges{ flex-wrap:wrap; }
+  /* generic container clip */
+  .container, .wrapper, .meters, .card{ max-width:100%; overflow-x:clip; }
+}
+html.standalone .toolbar{ flex-wrap:wrap; }
+html.standalone .container, html.standalone .wrapper, html.standalone .meters, html.standalone .card{ max-width:100%; overflow-x:clip; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Error -->
+    <div id="errBox" class="card" style="display:none;border-color:#e53e3e;background:#1c2430">
+      <b style="color:#fca5a5">เริ่มวัดไม่ได้</b>
+      <div id="errMsg" class="hint" style="color:#fca5a5">—</div>
+      <div class="row" style="margin-top:8px">
+        <button id="btnStartDemo" class="secondary">🧪 โหมดเดโม่ (ไม่ใช้ไมค์)</button>
+        <span class="hint">ถ้าบราวเซอร์บล็อกไมค์ ให้ใช้ HTTPS หรือกดไอคอนรูปกุญแจเพื่ออนุญาต</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:center;">
+        <h2 style="margin:0 0 4px 0">my RTAs (v  2.0)</h2>
+        <div class="row">
+          <button id="btnStart">▶️ เริ่มวัด</button>
+          <button id="btnStop" class="secondary" disabled>⏸️ หยุด</button>
+          <button id="btnHold" class="ghost" aria-pressed="true">📌 Hold Peak: ON</button>
+          <button id="btnClear" class="secondary">♻️ Clear Peak & ATH</button>
+          <button id="btnAweight" class="ghost" aria-pressed="false" title="สลับ A-weighting">A-weighting: OFF</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <label> Smoothing <input id="smoothing" type="range" min="0" max="0.95" step="0.01" value="0.75"></label>
+        <label> Averaging <input id="avg" type="checkbox" checked></label>
+      </div>
+
+      <div class="row" style="justify-content:space-between;">
+        <div class="row">
+          <label>พยายามปิด DSP ของระบบ:</label>
+          <div class="row">
+            <label>echoCancellation <input id="ec" type="checkbox" checked></label>
+            <label>noiseSuppression <input id="ns" type="checkbox" checked></label>
+            <label>autoGainControl <input id="agc" type="checkbox" checked></label>
+          </div>
+        </div>
+        <label>Theme
+          <select id="themeSelector">
+            <option value="dark-matter">Dark Matter</option>
+            <option value="studio-blue" selected>Studio Blue</option>
+            <option value="vintage-amber">Vintage Amber</option>
+            <option value="midnight-neon">Midnight Neon</option>
+            <option value="emerald-gold">Emerald Gold</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="meters">
+      <!-- FFT -->
+      <div class="card" id="fftCard">
+        <div class="row" style="justify-content:space-between;align-items:center;">
+          <div class="row">
+            <b>FFT - </b>
+            <select id="fftYScale">
+                <option value="log" selected>Log</option>
+                <option value="linear">Linear</option>
+            </select>
+          </div>
+          <div class="badges">
+            <span class="badge" id="fftPeakText">Peak: —</span>
+            <span class="badge" id="fftHoldText" style="display:none;">Hold: —</span>
+          </div>
+          <div class="toolbar">
+            <div class="stack">
+              <label>FFT Size
+                <input id="fftRangeSlider" type="range" min="0" max="3" step="1" value="1" aria-label="FFT size preset">
+                <select id="fftSizePreset">
+                  <option value="2048">2048</option>
+                  <option value="4096" selected>4096</option>
+                  <option value="8192">8192</option>
+                  <option value="16384">16384</option>
+                </select>
+              </label>
+            </div>
+            <button class="ghost icon-btn" id="fsFFT" title="Fullscreen" aria-label="Fullscreen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9V5a2 2 0 0 1 2-2h4"/>
+                <path d="M21 9V5a2 2 0 0 0-2-2h-4"/>
+                <path d="M3 15v4a2 2 0 0 0 2 2h4"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2h-4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="plot">
+          <canvas id="fftCanvas"></canvas>
+          <div id="fftTip" class="tip" style="display:none">—</div>
+        </div>
+      </div>
+
+      <!-- Octave -->
+      <div class="card" id="octCard">
+        <div class="row" style="justify-content:space-between;align-items:center;">
+          <div class="row">
+            <select id="octRes">
+                <option value="3">1/3</option>
+                <option value="6">1/6</option>
+                <option value="12" selected>1/12</option>
+                <option value="24">1/24</option>
+            </select>
+            <b>Oct</b>
+          </div>
+          <div class="badges">
+            <span class="badge" id="octPeakText">Peak: —</span>
+            <span class="badge" id="octHoldText" style="display:none;">Hold: —</span>
+          </div>
+          <div class="toolbar">
+            <div class="stack">
+              <label>Range
+                <input id="octRangeSlider" type="range" min="64" max="1023" step="1" value="255" aria-label="Octave bar range">
+                <select id="octRangePreset">
+                  <option value="127">127</option>
+                  <option value="255" selected>256</option>
+                  <option value="511">512</option>
+                </select>
+              </label>
+              <span class="hint" id="octRangeText">0–255</span>
+            </div>
+            <button class="ghost icon-btn" id="fsOct" title="Fullscreen" aria-label="Fullscreen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9V5a2 2 0 0 1 2-2h4"/>
+                <path d="M21 9V5a2 2 0 0 0-2-2h-4"/>
+                <path d="M3 15v4a2 2 0 0 0 2 2h4"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2h-4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="plot">
+          <canvas id="octCanvas"></canvas>
+          <div id="octTip" class="tip" style="display:none">—</div>
+        </div>
+      </div>
+
+      <!-- Spectrogram -->
+      <div class="card" id="heatmapCard">
+        <div class="row" style="justify-content:space-between;align-items:center;">
+          <div class="row">
+            <button id="btnToggleHeatmap" class="ghost" aria-pressed="false">OFF</button>
+            <button id="btnHeatmapQuality" class="ghost" aria-pressed="true">HD</button>
+          </div>
+          <div class="badges">
+            <span class="badge" id="heatmapAthText">ATH: —</span>
+            <button id="btnClearAth" class="ghost" style="font-size:12px;padding:4px 8px; margin-left:4px;">Clear</button>
+          </div>
+          <div class="toolbar">
+            <div class="stack">
+              <label>Range
+                <input id="heatmapRangeSlider" type="range" min="5" max="100" step="5" value="50" aria-label="Heatmap range">
+                <select id="heatmapRangePreset">
+                  <option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="40">40</option>
+                  <option value="50" selected>50</option><option value="60">60</option><option value="80">80</option><option value="100">100</option>
+                </select>
+              </label>
+              <span class="hint" id="heatmapRangeText">-50 dBFS</span>
+            </div>
+            <button class="ghost icon-btn" id="fsHeat" title="Fullscreen" aria-label="Fullscreen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9V5a2 2 0 0 1 2-2h4"/>
+                <path d="M21 9V5a2 2 0 0 0-2-2h-4"/>
+                <path d="M3 15v4a2 2 0 0 0 2 2h4"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2h-4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="plot">
+          <canvas id="heatmapCanvas"></canvas>
+          <div id="heatmapTip" class="tip" style="display:none">—</div>
+        </div>
+      </div>
+
+      <!-- dB meter -->
+      <div class="card">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:2px">
+          <b>ความดังรวม dB</b>
+          <button id="btnResetDba" class="secondary" style="font-size:12px;padding:6px 10px;">♻️ Reset AVG/MAX</button>
+        </div>
+        <div id="dbMeterContainer">
+          <canvas id="dbMeterCanvas"></canvas>
+          <span class="dbLabel" style="left:0%">0</span>
+          <span class="dbLabel" style="left:28.57%">40</span>
+          <span class="dbLabel" style="left:57.14%">80</span>
+          <span class="dbLabel" style="left:85.71%">120</span>
+          <span class="dbLabel" style="right:0">140</span>
+        </div>
+        <div class="values-grid" style="margin-top:12px;">
+          <div class="kv-item"><b>Realtime (dB)</b><span id="dbRealtimeValue">—</span></div>
+          <div class="kv-item"><b>AVG (dB)</b><span id="dbAvgValue">—</span></div>
+          <div class="kv-item"><b>MAX (dB)</b><span id="dbMaxValue">—</span></div>
+        </div>
+      </div>
+
+      <!-- RMS / Peak / ATH -->
+      <div class="card">
+        <div class="values-grid">
+          <div class="kv-item">
+            <b>ระดับ RMS (ดิบ dBFS)</b>
+            <span id="rms">—</span>
+          </div>
+          <div class="kv-item">
+            <b>โน้ตจาก ATH</b>
+            <span id="peak">—</span>
+          </div>
+          <div class="kv-item">
+            <b>All-Time High Peak</b>
+            <span id="athPeak">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calibration -->
+      <div class="card">
+        <div class="hint" style="flex-basis: 100%; margin-bottom: 4px;">ตั้งค่าออฟเซ็ตเพื่อแปลง dBFS เป็น dB (จากไมค์มือถือ)</div>
+        <div class="row calibration-control" style="justify-content: space-between; align-items: center; flex-wrap: wrap; width: 100%;">
+          <label for="calibrationSlider" style="flex-shrink: 0; margin-right: 8px;">Calibration</label>
+          <button class="ghost" id="btnCalibrateMinus">-</button>
+          <input type="range" id="calibrationSlider" min="50" max="150" step="1" value="80" style="flex-grow: 1; min-width: 120px;">
+          <button class="ghost" id="btnCalibratePlus">+</button>
+          <input type="number" id="calibrationOffset" value="80" style="width: 70px; text-align: center; margin-left: 8px;">
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="card">
+        <p class="hint" style="margin:0; text-align: center;"><b>ข้อจำกัด:</b> ไมค์มือถือมี DSP/AGC และการตอบสนองความถี่ไม่แฟลต ใช้ดูแนว EQ ได้แต่ไม่ใช่วัดระดับ SPL มืออาชีพ</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating command dock (icon-only) -->
+  <div class="float-dock" aria-label="Quick controls">
+    <button id="fabStart" class="fab" title="เริ่มวัด">▶️</button>
+    <button id="fabStop"  class="fab" title="หยุด" disabled>⏸️</button>
+    <button id="fabHold"  class="fab" title="Hold Peak" aria-pressed="true">📌</button>
+    <button id="fabClear" class="fab" title="Clear Peak & ATH">♻️</button>
+    <button id="fabAwt"   class="fab" title="A-weighting" aria-pressed="false">🎧</button>
+    <button id="fabSaver" class="fab" title="Battery Saver" aria-pressed="true">🔋</button>
+  </div>
+
+  
+<script>
+// Add 'standalone' class on <html> for iOS/standalone PWAs
+(function(){
+  try{
+    var isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) 
+                       || (window.navigator && window.navigator.standalone === true);
+    if(isStandalone){ document.documentElement.classList.add('standalone'); }
+  }catch(e){}
+})();
+</script>
+
+<script>
+  (() => {
+    class RTAnalyzer{
+      constructor(){
+        this.PAD={L:40,R:10,T:10,B:32};
+        this.LABEL_Y=10;
+        this.HEATMAP_TIME_SLICES=200;
+        this.HEATMAP_BINS_HD=300;
+        this.HEATMAP_BINS_SD=60;
+        this.FFT_SIZES=[2048,4096,8192,16384];
+
+        this.dom=this.getDOMElements();
+        this.colors={};
+
+        this.state={
+          audioCtx:null,analyser:null,micSrc:null,stream:null,rafId:null,
+          dataArray:null,freqArray:null,
+          sampleRate:48000,running:false,
+          holdEnabled:true,heatmapEnabled:false,heatmapIsHD:true,
+          aWeightEnabled:false, // Default to OFF
+          fftYScaleIsLog: true, // New state for FFT Y-axis scale
+          peakArray:null,peakOct:null,avgBuffer:null,
+          octN:12,bands:[],
+          heatmapData:[],heatmapFreqBinMap:null,lastHeatmapUpdate:0,
+          athHeatmap:{value:-Infinity,bin:0},
+          allTimeHighPeak: { freq: 0, val: -Infinity }, // New state for ATH peak
+          calibrationOffset:80, // Default to 80
+          maxDba:-Infinity,dbaValues:[],
+          octRangeMax:255,heatmapRangeMax:50,
+          guideFFT:null,guideOCT:null,guideHeatmap:null,
+          demo:{enabled:false,oscillators:[],noise:null,gain:null}
+        ,
+          sleepAfterMs:60000, wasRunningBeforeSleep:false, autoDisabledHeatmap:false
+        };
+
+        // default theme
+        document.documentElement.dataset.theme='studio-blue';
+        this.updateColors();
+        
+        // Sync initial state from DOM
+        this.state.calibrationOffset = parseFloat(this.dom.calibrationOffset.value) || 80;
+        this.dom.calibrationSlider.value = this.state.calibrationOffset;
+        this.state.aWeightEnabled = this.dom.btnAweight.getAttribute('aria-pressed') === 'true';
+        this.state.fftYScaleIsLog = this.dom.fftYScale.value === 'log';
+
+        // Floating dock (follow fullscreen)
+        this.dock = document.querySelector('.float-dock');
+        this.dockHome = this.dock ? this.dock.parentElement : null;
+
+        this.setupEventListeners();
+        // --- Sleep Mode timers/flags ---
+        this._sleepTimer = null;
+        this._hiddenAt = null;
+        this._sleeping = false;
+
+        this.setupCanvases();
+        this.updateOctaveRangeText();
+        this.updateHeatmapRangeText();
+        this.drawInitialFrames();
+        this.preflight();
+      }
+
+      getDOMElements(){
+        const ids=['btnStart','btnStop','btnHold','btnClear','btnToggleHeatmap','btnHeatmapQuality',
+          'btnResetDba','btnClearAth','btnStartDemo','btnAweight','fftSizePreset','smoothing','avg',
+          'ec','ns','agc','themeSelector','fftRangeSlider','fftPeakText','fftHoldText','octPeakText',
+          'octHoldText','heatmapAthText','fftCanvas','octCanvas','heatmapCanvas','dbMeterCanvas',
+          'fftTip','octTip','heatmapTip','dbRealtimeValue','dbAvgValue','dbMaxValue',
+          'octRes','octRangePreset','octRangeSlider','octRangeText','heatmapRangeSlider',
+          'heatmapRangePreset','heatmapRangeText','rms','peak','athPeak','errBox','errMsg','fsOct','fsFFT','fsHeat',
+          'calibrationOffset', 'calibrationSlider', 'btnCalibrateMinus', 'btnCalibratePlus', 'fftYScale',
+          /* floating buttons */ 'fabStart','fabStop','fabHold','fabClear','fabAwt'
+        ];
+        const dom={}; ids.forEach(id=>dom[id]=document.getElementById(id));
+        dom.fftCard=document.getElementById('fftCard');
+        dom.octCard=document.getElementById('octCard');
+        dom.heatmapCard=document.getElementById('heatmapCard');
+        return dom;
+      }
+      // --- Sleep/Resume helpers ---
+      enterSleep(reason='hidden'){ this.showToast('Sleep mode: ปิดไมค์ + Heatmap');
+        if(this._sleeping) return;
+        this._sleeping = true;
+        // remember states
+        this.state.wasRunningBeforeSleep = !!this.state.running;
+        if(this.state.heatmapEnabled){
+          this.state.autoDisabledHeatmap = true;
+          this.state.heatmapEnabled = false;
+          if(this.dom.btnToggleHeatmap){
+            this.dom.btnToggleHeatmap.setAttribute('aria-pressed','false');
+            this.dom.btnToggleHeatmap.textContent='OFF';
+          }
+          this.drawHeatmapOverlay();
+        }
+        if(this.state.running) this.stop();
+      }
+      exitSleep(){ this.showToast('กลับมาใช้งาน: เปิดไมค์ต่อ');
+        if(!this._sleeping) return;
+        this._sleeping = false;
+        if(this.state.wasRunningBeforeSleep && !this.state.running){
+          // best-effort; if browser blocks auto-start, user can press Start
+          this.start().catch?.(()=>{});
+        }
+        if(this.state.autoDisabledHeatmap){
+          this.state.heatmapEnabled = true;
+          this.state.autoDisabledHeatmap = false;
+          if(this.dom.btnToggleHeatmap){
+            this.dom.btnToggleHeatmap.setAttribute('aria-pressed','true');
+            this.dom.btnToggleHeatmap.textContent='ON';
+          }
+        }
+      }
+
+
+      preflight(){
+        if(!navigator.mediaDevices?.getUserMedia){
+          this.showError('เบราว์เซอร์ไม่รองรับ getUserMedia — ลองใช้ Chrome/Edge/Firefox หรือ Safari รุ่นใหม่');
+        }
+      }
+      
+      updateCalibrationValue(newValue) {
+        const min = parseInt(this.dom.calibrationSlider.min, 10);
+        const max = parseInt(this.dom.calibrationSlider.max, 10);
+        const value = Math.max(min, Math.min(max, newValue));
+
+        this.state.calibrationOffset = value;
+        this.dom.calibrationOffset.value = value;
+        this.dom.calibrationSlider.value = value;
+      }
+
+      setupEventListeners(){
+        // Header controls
+        this.dom.btnStart.addEventListener('click',()=>this.start());
+        this.dom.btnStartDemo.addEventListener('click',()=>this.startDemo());
+        this.dom.btnStop.addEventListener('click',()=>this.stop());
+        this.dom.btnClear.addEventListener('click',()=>this.clearPeak());
+        this.dom.btnResetDba.addEventListener('click',()=>this.resetDbaValues());
+
+        this.dom.btnHold.addEventListener('click',()=>{
+          this.state.holdEnabled=!this.state.holdEnabled;
+          this.dom.btnHold.setAttribute('aria-pressed',this.state.holdEnabled);
+          this.dom.btnHold.textContent=`📌 Hold Peak: ${this.state.holdEnabled?'ON':'OFF'}`;
+          this.syncFloating();
+        });
+
+        this.dom.btnAweight.addEventListener('click',()=>{
+          this.state.aWeightEnabled=!this.state.aWeightEnabled;
+          this.dom.btnAweight.setAttribute('aria-pressed',this.state.aWeightEnabled);
+          this.dom.btnAweight.textContent=`A-weighting: ${this.state.aWeightEnabled?'ON':'OFF'}`;
+          this.syncFloating();
+        });
+
+        this.dom.btnToggleHeatmap.addEventListener('click',()=>{
+          this.state.heatmapEnabled=!this.state.heatmapEnabled;
+          this.dom.btnToggleHeatmap.setAttribute('aria-pressed',this.state.heatmapEnabled);
+          this.dom.btnToggleHeatmap.textContent=this.state.heatmapEnabled?'ON':'OFF';
+          if(!this.state.heatmapEnabled) this.drawHeatmapOverlay();
+        });
+
+        this.dom.btnHeatmapQuality.addEventListener('click',()=>{
+          this.state.heatmapIsHD=!this.state.heatmapIsHD;
+          this.dom.btnHeatmapQuality.setAttribute('aria-pressed',this.state.heatmapIsHD);
+          this.dom.btnHeatmapQuality.textContent=this.state.heatmapIsHD?'HD':'SD';
+          this.state.heatmapFreqBinMap=this.genHeatmapBins();
+          this.state.heatmapData=[];
+          if(this.state.heatmapEnabled) this.drawHeatmap(true); else this.drawHeatmapOverlay();
+        });
+
+        this.dom.btnClearAth.addEventListener('click',()=>{
+          this.state.athHeatmap={value:-Infinity,bin:0};
+          this.dom.heatmapAthText.textContent='ATH: —';
+        });
+
+        this.dom.themeSelector.addEventListener('change',(e)=>this.applyTheme(e.target.value));
+
+        // FFT Y-Scale Selector
+        this.dom.fftYScale.addEventListener('change', (e) => {
+          this.state.fftYScaleIsLog = e.target.value === 'log';
+          this.drawFFTBackground();
+        });
+
+        // --- Calibration Controls ---
+        this.dom.calibrationSlider.addEventListener('input', (e) => {
+            this.updateCalibrationValue(parseFloat(e.target.value));
+        });
+        this.dom.calibrationOffset.addEventListener('input', (e) => {
+            this.updateCalibrationValue(parseFloat(e.target.value));
+        });
+        this.dom.btnCalibrateMinus.addEventListener('click', () => {
+            this.updateCalibrationValue(this.state.calibrationOffset - 1);
+        });
+        this.dom.btnCalibratePlus.addEventListener('click', () => {
+            this.updateCalibrationValue(this.state.calibrationOffset + 1);
+        });
+
+
+        this.dom.fftSizePreset.addEventListener('change',(e)=>{
+          const idx=[2048,4096,8192,16384].indexOf(parseInt(e.target.value,10));
+          this.dom.fftRangeSlider.value=idx<0?1:idx;
+          this.onConfigChange();
+        });
+        this.dom.fftRangeSlider.addEventListener('input',(e)=>{
+          const idx=parseInt(e.target.value,10);
+          const size=[2048,4096,8192,16384][idx]||4096;
+          this.dom.fftSizePreset.value=size;
+          this.onConfigChange();
+        });
+
+        this.dom.smoothing.addEventListener('input',()=>{
+          if(this.state.analyser) this.state.analyser.smoothingTimeConstant=parseFloat(this.dom.smoothing.value);
+        });
+
+        this.dom.octRes.addEventListener('change',()=>{
+          this.state.octN=parseInt(this.dom.octRes.value,10);
+          this.state.bands=this.genBands(this.state.octN);
+          this.state.peakOct=new Float32Array(this.state.bands.length);
+        });
+
+        [this.dom.ec,this.dom.ns,this.dom.agc].forEach(el=>el.addEventListener('change',()=>{
+          if(this.state.running){ this.stop(); setTimeout(()=>this.start(),50); }
+        }));
+
+        this.dom.octRangePreset.addEventListener('change',(e)=>{
+          this.state.octRangeMax=parseInt(e.target.value,10);
+          this.dom.octRangeSlider.value=this.state.octRangeMax;
+          this.updateOctaveRangeText();
+        });
+        this.dom.octRangeSlider.addEventListener('input',(e)=>{
+          this.state.octRangeMax=parseInt(e.target.value,10);
+          this.updateOctaveRangeText();
+        });
+        // --- Page Visibility / Sleep Mode ---
+        const scheduleSleep = () => {
+          clearTimeout(this._sleepTimer);
+          this._sleepTimer = setTimeout(()=> this.enterSleep('timeout'), this.state.sleepAfterMs);
+        };
+        const clearSleepTimer = () => { clearTimeout(this._sleepTimer); this._sleepTimer=null; };
+
+        document.addEventListener('visibilitychange', () => {
+          if(document.hidden){
+            this._hiddenAt = Date.now();
+            scheduleSleep();
+          }else{
+            const elapsed = this._hiddenAt ? (Date.now() - this._hiddenAt) : 0;
+            clearSleepTimer();
+            if(this._sleeping || elapsed >= this.state.sleepAfterMs){ this.exitSleep(); }
+            this._hiddenAt = null;
+          }
+        });
+        window.addEventListener('blur', () => { if(!document.hidden) scheduleSleep(); });
+        window.addEventListener('focus', () => { clearSleepTimer(); if(this._sleeping) this.exitSleep(); });
+        window.addEventListener('pagehide', () => { this.enterSleep('pagehide'); });
+        window.addEventListener('pageshow', () => { this.exitSleep(); });
+
+        this.dom.heatmapRangePreset.addEventListener('change',(e)=>{
+          this.state.heatmapRangeMax=parseInt(e.target.value,10);
+          this.dom.heatmapRangeSlider.value=this.state.heatmapRangeMax;
+          this.updateHeatmapRangeText();
+        });
+        this.dom.heatmapRangeSlider.addEventListener('input',()=>{
+          this.state.heatmapRangeMax=parseInt(this.dom.heatmapRangeSlider.value,10);
+          this.updateHeatmapRangeText();
+        });
+
+        // fullscreen binds
+        this.setupFsToggle(this.dom.fsFFT,this.dom.fftCard);
+        this.setupFsToggle(this.dom.fsOct,this.dom.octCard);
+        this.setupFsToggle(this.dom.fsHeat,this.dom.heatmapCard);
+
+        // Floating buttons map to the same actions
+        this.dom.fabStart.addEventListener('click',()=>this.dom.btnStart.click());
+        this.dom.fabStop .addEventListener('click',()=>this.dom.btnStop.click());
+        this.dom.fabClear.addEventListener('click',()=>this.dom.btnClear.click());
+        this.dom.fabHold .addEventListener('click',()=>this.dom.btnHold.click());
+        this.dom.fabAwt  .addEventListener('click',()=>this.dom.btnAweight.click());
+
+        window.addEventListener('resize',()=>this.handleResize());
+        document.addEventListener('webkitfullscreenchange',()=>this.onFullscreenChange());
+        document.addEventListener('fullscreenchange',()=>this.onFullscreenChange());
+      }
+
+      // Dock follow fullscreen (desktop/iPad)
+      mountDock(target){
+        if(!this.dock || !target) return;
+        if(this.dock.parentElement !== target){
+          target.appendChild(this.dock);
+        }
+      }
+      restoreDock(){
+        if(!this.dock || !this.dockHome) return;
+        if(this.dock.parentElement !== this.dockHome){
+          this.dockHome.appendChild(this.dock);
+        }
+      }
+      onFullscreenChange(){
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement || null;
+        if(fsEl && (fsEl===this.dom.fftCard || fsEl===this.dom.octCard || fsEl===this.dom.heatmapCard)){
+          this.mountDock(fsEl);
+        }else{
+          this.restoreDock();
+        }
+        this.handleResize();
+      }
+
+      syncFloating(){
+        this.dom.fabStart.disabled = this.dom.btnStart.disabled;
+        this.dom.fabStop .disabled = this.dom.btnStop.disabled;
+        this.dom.fabHold.setAttribute('aria-pressed', this.state.holdEnabled);
+        this.dom.fabAwt .setAttribute('aria-pressed', this.state.aWeightEnabled);
+      }
+
+      setupFsToggle(btn,card){
+        if(!btn||!card) return;
+        const isActive=()=>document.fullscreenElement===card||document.webkitFullscreenElement===card||card.classList.contains('is-fullscreen');
+
+        const showActive=(active)=>{ btn.setAttribute('data-active', active?'1':'0'); };
+
+        const enter=async()=>{
+          if(card.requestFullscreen){
+            try{ await card.requestFullscreen({navigationUI:'hide'}); }
+            catch{ card.classList.add('is-fullscreen'); this.mountDock(card); }
+          }else if(card.webkitRequestFullscreen){
+            try{ card.webkitRequestFullscreen(); }
+            catch{ card.classList.add('is-fullscreen'); this.mountDock(card); }
+          }else{
+            card.classList.add('is-fullscreen'); this.mountDock(card);
+          }
+          this.handleResize(); showActive(true);
+        };
+
+        const exit=async()=>{
+          if((document.fullscreenElement===card || document.webkitFullscreenElement===card) && (document.exitFullscreen || document.webkitExitFullscreen)){
+            try{ (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+            catch{ card.classList.remove('is-fullscreen'); this.restoreDock(); }
+          }else{
+            card.classList.remove('is-fullscreen'); this.restoreDock();
+          }
+          this.handleResize(); showActive(false);
+        };
+
+        btn.addEventListener('click',()=>{isActive()?exit():enter();});
+        showActive(isActive());
+      }
+
+      setupCanvases(){
+        this.canvases={
+          fft:{canvas:this.dom.fftCanvas,ctx:this.dom.fftCanvas.getContext('2d'),tip:this.dom.fftTip},
+          oct:{canvas:this.dom.octCanvas,ctx:this.dom.octCanvas.getContext('2d'),tip:this.dom.octTip},
+          heatmap:{canvas:this.dom.heatmapCanvas,ctx:this.dom.heatmapCanvas.getContext('2d'),tip:this.dom.heatmapTip},
+          dbMeter:{canvas:this.dom.dbMeterCanvas,ctx:this.dom.dbMeterCanvas.getContext('2d')}
+        };
+        this.handleResize();
+        this.attachPressGuide(this.canvases.fft,'fft');
+        this.attachPressGuide(this.canvases.oct,'oct');
+        this.attachPressGuide(this.canvases.heatmap,'heatmap');
+      }
+
+      handleResize(){
+        const dpr=window.devicePixelRatio||1;
+        for(const k in this.canvases){
+          const obj=this.canvases[k]; if(!obj||!obj.canvas) continue;
+          const {canvas,ctx}=obj; const rect=canvas.getBoundingClientRect();
+          canvas.width=rect.width*dpr; canvas.height=rect.height*dpr;
+          if(ctx){ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);}
+        }
+        this.drawInitialFrames();
+        if(this.state.running){
+          this.drawFFT(); this.drawOctave(); if(this.state.heatmapEnabled) this.drawHeatmap(true);
+        }
+      }
+
+      drawInitialFrames(){
+        this.drawFFTBackground();
+        this.drawLogGrid(this.canvases.oct.ctx);
+        this.drawHeatmapBackground(this.canvases.heatmap.ctx);
+        this.drawHeatmapOverlay();
+        this.drawDbMeterBackground();
+      }
+
+      async start(){
+        this.dom.btnStart.disabled=true;
+        this.syncFloating();
+        try{
+          if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
+            throw new Error('เบราว์เซอร์ไม่รองรับ getUserMedia API');
+
+          const constraints={audio:{
+            echoCancellation:{ideal:this.dom.ec.checked},
+            noiseSuppression:{ideal:this.dom.ns.checked},
+            autoGainControl:{ideal:this.dom.agc.checked}
+          }};
+          let stream;
+          try{ stream=await navigator.mediaDevices.getUserMedia(constraints); }
+          catch(e){
+            if(e && (e.name==='NotAllowedError'||e.name==='SecurityError')){
+              this.showError('เบราว์เซอร์ไม่อนุญาตใช้ไมโครโฟน (NotAllowed). ใช้ HTTPS และอนุญาตสิทธิ์ หรือใช้โหมดเดโม่');
+              this.dom.btnStart.disabled=false; this.syncFloating(); return;
+            }
+            if(e && (e.name==='NotFoundError'||e.name==='OverconstrainedError')){
+              this.showError('ไม่พบอุปกรณ์ไมค์ที่ใช้งานได้'); this.dom.btnStart.disabled=false; this.syncFloating(); return;
+            }
+            try{ stream=await navigator.mediaDevices.getUserMedia({audio:true}); }
+            catch(e2){ this.showError(`เริ่มไมค์ไม่ได้: ${e2.message||e2}`); this.dom.btnStart.disabled=false; this.syncFloating(); return; }
+          }
+
+          const audioCtx=new (window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});
+          if(audioCtx.state==='suspended') await audioCtx.resume();
+
+          const analyser=audioCtx.createAnalyser();
+          const micSrc=audioCtx.createMediaStreamSource(stream);
+          micSrc.connect(analyser);
+
+          this.state={...this.state,audioCtx,analyser,micSrc,stream,running:true,demo:{...this.state.demo,enabled:false}};
+          this.onConfigChange();
+          this.resetDbaValues();
+          this.dom.errBox.style.display='none';
+          this.dom.btnStop.disabled=false;
+          this.syncFloating();
+          this.loop();
+        }catch(err){
+          console.error(err); this.showError(err.message||String(err)); this.dom.btnStart.disabled=false; this.syncFloating();
+        }
+      }
+
+      async startDemo(){
+        try{
+          const audioCtx=new (window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});
+          if(audioCtx.state==='suspended') await audioCtx.resume();
+          const analyser=audioCtx.createAnalyser();
+          const gain=audioCtx.createGain(); gain.gain.value=0.5; // Demo gain
+
+          const osc1=audioCtx.createOscillator(); osc1.type='sine'; osc1.frequency.value=200;
+          const osc2=audioCtx.createOscillator(); osc2.type='sine'; osc2.frequency.value=1000;
+          const osc3=audioCtx.createOscillator(); osc3.type='sine'; osc3.frequency.value=5000;
+
+          const nb=audioCtx.createBuffer(1,audioCtx.sampleRate,audioCtx.sampleRate);
+          const data=nb.getChannelData(0); for(let i=0;i<data.length;i++) data[i]=(Math.random() * 2 - 1) * 0.02;
+          const noise=audioCtx.createBufferSource(); noise.buffer=nb; noise.loop=true;
+
+          osc1.connect(gain); osc2.connect(gain); osc3.connect(gain); noise.connect(gain);
+          gain.connect(analyser); // gain.connect(audioCtx.destination); // Don't output demo sound
+          osc1.start(); osc2.start(); osc3.start(); noise.start();
+
+          let t=0; const mod=()=>{ t+=0.016;
+            osc1.frequency.value=180+40*Math.sin(t*0.9);
+            osc2.frequency.value=900+150*Math.sin(t*0.7);
+            osc3.frequency.value=4500+600*Math.sin(t*0.5);
+            if(this.state.running && this.state.demo.enabled) requestAnimationFrame(mod);
+          };
+
+          this.state={...this.state,audioCtx,analyser,micSrc:null,stream:null,running:true,
+            demo:{enabled:true,oscillators:[osc1,osc2,osc3],noise,gain}};
+          this.onConfigChange();
+          this.resetDbaValues();
+          this.dom.errBox.style.display='none';
+          this.dom.btnStart.disabled=true;
+          this.dom.btnStop.disabled=false;
+          this.syncFloating();
+          this.loop(); mod();
+        }catch(e){ this.showError('เริ่มโหมดเดโม่ไม่ได้: '+(e.message||e)); }
+      }
+
+      stop(){
+        if(!this.state.running) return;
+        this.state.running=false; cancelAnimationFrame(this.state.rafId);
+        this.state.stream?.getTracks().forEach(t=>t.stop()); this.state.micSrc?.disconnect();
+        if(this.state.demo.enabled){
+          this.state.demo.oscillators.forEach(o=>{try{o.stop();o.disconnect();}catch{}});
+          try{this.state.demo.noise.stop(); this.state.demo.noise.disconnect();}catch{}
+          try{this.state.demo.gain.disconnect();}catch{}
+        }
+        this.state.analyser?.disconnect(); try{this.state.audioCtx?.close();}catch{}
+        this.state={...this.state,audioCtx:null,analyser:null,micSrc:null,stream:null,demo:{enabled:false,oscillators:[],noise:null,gain:null}};
+        this.dom.btnStart.disabled=false; this.dom.btnStop.disabled=true;
+        this.syncFloating();
+        this.dom.dbRealtimeValue.textContent='—'; this.updateDbMeter(-Infinity);
+      }
+
+      onConfigChange(){
+        if(!this.state.analyser) return;
+        this.state.analyser.fftSize=parseInt(this.dom.fftSizePreset.value,10);
+        this.state.analyser.smoothingTimeConstant=parseFloat(this.dom.smoothing.value);
+        this.state.dataArray=new Uint8Array(this.state.analyser.fftSize);
+        this.state.freqArray=new Uint8Array(this.state.analyser.frequencyBinCount);
+        this.state.peakArray=new Uint8Array(this.state.analyser.frequencyBinCount);
+        this.state.avgBuffer=new Float32Array(this.state.analyser.frequencyBinCount);
+        this.state.sampleRate=this.state.audioCtx.sampleRate;
+        this.state.bands=this.genBands(this.state.octN);
+        this.state.peakOct=new Float32Array(this.state.bands.length);
+        this.state.heatmapFreqBinMap=this.genHeatmapBins();
+        this.state.heatmapData=[];
+        this.state.athHeatmap={value:-Infinity,bin:0};
+      }
+
+      loop(){
+        if(!this.state.running) return;
+        this.state.analyser.getByteTimeDomainData(this.state.dataArray);
+        this.state.analyser.getByteFrequencyData(this.state.freqArray);
+        if(this.dom.avg.checked){
+          const a=0.5;
+          for(let i=0;i<this.state.freqArray.length;i++){
+            this.state.avgBuffer[i]=a*this.state.avgBuffer[i]+(1-a)*this.state.freqArray[i];
+            this.state.freqArray[i]=this.state.avgBuffer[i];
+          }
+        }
+        this.drawFFT(); this.drawOctave(); this.updateRMS(); this.updateDba();
+        const now=performance.now();
+        if(this.state.heatmapEnabled && (now-this.state.lastHeatmapUpdate>=33)){
+          this.drawHeatmap(); this.state.lastHeatmapUpdate=now;
+        }
+        this.state.rafId=requestAnimationFrame(()=>this.loop());
+      }
+
+      clamp01(v){return Math.min(1,Math.max(0,v));}
+      dbfs(v){return 20*Math.log10(v/255+1e-12);}
+      fmtHz(f){return f>=1000?(((f/1000)>=10?(f/1000).toFixed(0):(f/1000).toFixed(1))+' kHz'):(Math.round(f)+' Hz');}
+      freqToNote(freq){
+        if(!(freq>0) || !isFinite(freq)) return '—';
+        const midi = Math.round(69 + 12 * Math.log2(freq / 440));
+        const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+        const name = names[((midi % 12) + 12) % 12];
+        const octave = Math.floor(midi / 12) - 1;
+        return `${name}${octave}`;
+      }
+    
+      aWeighting(f){const f2=f*f; const ra=(12194**2*f2**2)/((f2+20.6**2)*Math.sqrt((f2+107.7**2)*(f2+737.9**2))*(f2+12194**2)); return 20*Math.log10(ra)+2.00;}
+      fmax(){return Math.min(this.state.sampleRate/2,22050);}
+      mapLogX(f,w){const fm=this.fmax(),fmin=20; const t=(Math.log10(Math.max(f,fmin))-Math.log10(fmin))/(Math.log10(fm)-Math.log10(fmin)); return this.PAD.L+t*(w-this.PAD.L-this.PAD.R);}
+      xToFreq(x,w){const fm=this.fmax(),fmin=20; const plotW=w-this.PAD.L-this.PAD.R; const t=this.clamp01((x-this.PAD.L)/plotW); const lf=Math.log10(fmin)+t*(Math.log10(fm)-Math.log10(fmin)); return Math.pow(10,lf);}
+      mapDbToY(db,h){const norm=this.clamp01((db+100)/100); const plotH=h-this.PAD.T-this.PAD.B; return this.PAD.T+(1-norm)*plotH;}
+      mapLinearAmplitudeToY(val, h) { const norm = this.clamp01(val / 255); const plotH = h - this.PAD.T - this.PAD.B; return this.PAD.T + (1 - norm) * plotH; }
+      mapLinearToYOct(v,h){const norm=this.clamp01(v/Math.max(1,this.state.octRangeMax)); const plotH=h-this.PAD.T-this.PAD.B; return this.PAD.T+(1-norm)*plotH;}
+      mapDbToColorHeatmap(db){const maxDb=0,minDb=maxDb-this.state.heatmapRangeMax; const t=this.clamp01((db-minDb)/(maxDb-minDb));
+        if(t<0.25) return this.colors.heatmap[0]; if(t<0.5) return this.colors.heatmap[1];
+        if(t<0.75) return this.colors.heatmap[2]; if(t<0.9) return this.colors.heatmap[3];
+        return this.colors.heatmap[4];
+      }
+
+      genBands(n){
+        const r=Math.pow(2,1/n), fm=this.fmax(), fmin=20;
+        const kmin=Math.ceil(Math.log(fmin/1000)/Math.log(r));
+        const kmax=Math.floor(Math.log(fm/1000)/Math.log(r));
+        const edgeHalf=Math.pow(2,1/(2*n)); const arr=[];
+        for(let k=kmin;k<=kmax;k++){
+          const fc=1000*Math.pow(r,k), fl=fc/edgeHalf, fh=fc*edgeHalf;
+          if(fh<fmin || fl>fm) continue;
+          arr.push({fc,fl:Math.max(fl,fmin),fh:Math.min(fh,fm)});
+        }
+        return arr;
+      }
+
+      genHeatmapBins(){
+        if(!this.state.analyser) return null;
+        const num=this.state.heatmapIsHD?this.HEATMAP_BINS_HD:this.HEATMAP_BINS_SD;
+        const fm=this.fmax(), fpb=this.state.sampleRate/this.state.analyser.fftSize, fmin=20;
+        const logFmin=Math.log10(fmin), logFmax=Math.log10(fm); const bins=[];
+        for(let i=0;i<num;i++){
+          const logFs=logFmin+(i/num)*(logFmax-logFmin);
+          const logFe=logFmin+((i+1)/num)*(logFmax-logFmin);
+          const fStart=Math.pow(10,logFs), fEnd=Math.pow(10,logFe);
+          const binStart=Math.max(0,Math.floor(fStart/fpb));
+          const binEnd=Math.min(this.state.analyser.frequencyBinCount-1,Math.ceil(fEnd/fpb));
+          bins.push({binStart,binEnd,fStart,fEnd});
+        }
+        return bins;
+      }
+      
+      drawFFTBackground() {
+        const ctx = this.canvases.fft.ctx;
+        if (!ctx) return;
+        const w = ctx.canvas.width / (window.devicePixelRatio || 1);
+        const h = ctx.canvas.height / (window.devicePixelRatio || 1);
+        const plotAreaH = h - this.PAD.T - this.PAD.B;
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = this.colors.gridH;
+        for (let i = 0; i < 6; i++) { const y = this.PAD.T + (i / 5) * plotAreaH; ctx.beginPath(); ctx.moveTo(this.PAD.L, y); ctx.lineTo(w - this.PAD.R, y); ctx.stroke(); }
+        ctx.strokeStyle = this.colors.gridV;
+        const ticks = [20, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 2000, 4000, 8000, 16000];
+        ticks.forEach(t => { const x = this.mapLogX(t, w); ctx.beginPath(); ctx.moveTo(x, this.PAD.T); ctx.lineTo(x, this.PAD.T + plotAreaH); ctx.stroke(); });
+        ctx.strokeStyle = this.colors.frame; ctx.strokeRect(this.PAD.L, this.PAD.T, w - this.PAD.L - this.PAD.R, plotAreaH);
+        ctx.fillStyle = this.colors.label; ctx.font = '12px system-ui';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000].forEach(t => { const x = this.mapLogX(t, w); ctx.fillText(t >= 1000 ? (t / 1000) + 'k' : t, x, h - this.LABEL_Y); });
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let i = 0; i <= 5; i++) {
+            const y = this.PAD.T + (i / 5) * plotAreaH;
+            let label;
+            if (this.state.fftYScaleIsLog) {
+                label = `${-i * 20}`;
+            } else {
+                label = (1 - i / 5).toFixed(1);
+            }
+            ctx.fillText(label, this.PAD.L - 8, y);
+        }
+      }
+
+      drawLogGrid(ctx){
+        if(!ctx) return;
+        const w=ctx.canvas.width/(window.devicePixelRatio||1);
+        const h=ctx.canvas.height/(window.devicePixelRatio||1);
+        const plotAreaH=h-this.PAD.T-this.PAD.B;
+        ctx.clearRect(0,0,w,h);
+        ctx.strokeStyle=this.colors.gridH;
+        for(let i=0;i<6;i++){const y=this.PAD.T+(i/5)*plotAreaH; ctx.beginPath(); ctx.moveTo(this.PAD.L,y); ctx.lineTo(w-this.PAD.R,y); ctx.stroke();}
+        ctx.strokeStyle=this.colors.gridV;
+        const ticks=[20,31.5,40,50,63,80,100,125,160,200,250,315,400,500,630,800,1000,2000,4000,8000,16000];
+        ticks.forEach(t=>{const x=this.mapLogX(t,w); ctx.beginPath(); ctx.moveTo(x,this.PAD.T); ctx.lineTo(x,this.PAD.T+plotAreaH); ctx.stroke();});
+        ctx.strokeStyle=this.colors.frame; ctx.strokeRect(this.PAD.L,this.PAD.T,w-this.PAD.L-this.PAD.R,plotAreaH);
+        ctx.fillStyle=this.colors.label; ctx.font='12px system-ui'; ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+        [31.5,63,125,250,500,1000,2000,4000,8000,16000].forEach(t=>{const x=this.mapLogX(t,w); ctx.fillText(t>=1000?(t/1000)+'k':t,x,h-this.LABEL_Y);});
+      }
+
+      drawPeakLine(ctx,x,wCss,hCss,color,dashed=false,labelText=null){
+        const y0=this.PAD.T, y1=hCss-this.PAD.B;
+        ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=1;
+        if(dashed) ctx.setLineDash([5,5]);
+        ctx.beginPath(); ctx.moveTo(x,y0); ctx.lineTo(x,y1); ctx.stroke(); ctx.restore();
+        if(!labelText) return;
+        ctx.save(); ctx.font='12px system-ui';
+        const padX=6, textW=ctx.measureText(labelText).width;
+        const boxW=textW+padX*2, boxH=18;
+        let bx=Math.round(x-boxW/2); const minX=this.PAD.L+2, maxX=(wCss-this.PAD.R)-boxW-2;
+        if(bx<minX) bx=minX; if(bx>maxX) bx=maxX; const by=y0+2;
+        ctx.fillStyle='rgba(0,0,0,.45)'; ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.lineWidth=1;
+        const r=8; ctx.beginPath();
+        ctx.moveTo(bx+r,by); ctx.lineTo(bx+boxW-r,by);
+        ctx.quadraticCurveTo(bx+boxW,by,bx+boxW,by+r);
+        ctx.lineTo(bx+boxW,by+boxH-r); ctx.quadraticCurveTo(bx+boxW,by+boxH,bx+boxW-r,by+boxH);
+        ctx.lineTo(bx+r,by+boxH); ctx.quadraticCurveTo(bx,by+boxH,bx,by+boxH-r);
+        ctx.lineTo(bx,by+r); ctx.quadraticCurveTo(bx,by,bx+r,by); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle=this.colors.label||'#e5e7eb'; ctx.textBaseline='middle'; ctx.textAlign='center';
+        ctx.fillText(labelText,bx+boxW/2,by+boxH/2+0.5); ctx.restore();
+      }
+
+      drawGuide(ctx,x,h){ctx.save(); ctx.strokeStyle='rgba(100,149,237,.75)'; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(x,this.PAD.T); ctx.lineTo(x,h-this.PAD.B); ctx.stroke(); ctx.restore();}
+      drawHeatmapGuide(ctx,x,h){ctx.save(); ctx.strokeStyle='rgba(100,149,237,.75)'; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h-this.PAD.B); ctx.stroke(); ctx.restore();}
+
+      drawFFT(){
+        const {ctx}=this.canvases.fft; if(!ctx) return;
+        const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        this.drawFFTBackground();
+        if(!this.state.freqArray) return;
+        const N=this.state.freqArray.length, fpb=this.state.sampleRate/(2*N);
+        
+        if(this.state.holdEnabled){for(let i=0;i<N;i++) this.state.peakArray[i]=Math.max(this.state.peakArray[i],this.state.freqArray[i]);}
+        
+        ctx.beginPath(); let started=false;
+        for(let i=1;i<N;i++){
+            const f=i*fpb; if(f > this.fmax() || f < 20) continue;
+            const x = this.mapLogX(f,w);
+            const y = this.state.fftYScaleIsLog ? this.mapDbToY(this.dbfs(this.state.freqArray[i]),h) : this.mapLinearAmplitudeToY(this.state.freqArray[i], h);
+            if(!started){ctx.moveTo(x,y); started=true;} else ctx.lineTo(x,y);
+        }
+        ctx.strokeStyle=this.colors.fft; ctx.lineWidth=2; ctx.stroke();
+
+        ctx.beginPath(); started=false;
+        for(let i=1;i<N;i++){
+            const f=i*fpb; if(f > this.fmax() || f < 20) continue;
+            const x = this.mapLogX(f,w);
+            const y = this.state.fftYScaleIsLog ? this.mapDbToY(this.dbfs(this.state.peakArray[i]||0),h) : this.mapLinearAmplitudeToY(this.state.peakArray[i]||0, h);
+            if(!started){ctx.moveTo(x,y); started=true;} else ctx.lineTo(x,y);
+        }
+        ctx.save(); ctx.globalAlpha=.35; ctx.strokeStyle=this.colors.peak; ctx.lineWidth=1.25; ctx.stroke(); ctx.restore();
+
+        let peakBin=0,peakVal=-Infinity; for(let i=0;i<N;i++) if(this.state.freqArray[i]>peakVal){peakVal=this.state.freqArray[i]; peakBin=i;}
+        
+        let peakHz = peakBin * fpb;
+        if (peakBin > 0 && peakBin < N - 1) {
+            const alpha = this.state.freqArray[peakBin - 1];
+            const beta = this.state.freqArray[peakBin];
+            const gamma = this.state.freqArray[peakBin + 1];
+            const p = 0.5 * (alpha - gamma) / (alpha - 2 * beta + gamma);
+            if (Math.abs(p) < 1) {
+                peakHz = (peakBin + p) * fpb;
+            }
+        }
+        
+        this.dom.fftPeakText.textContent=`Peak: ${this.fmtHz(peakHz)}`;
+        this.dom.peak.textContent = this.freqToNote(this.state.allTimeHighPeak.freq);
+
+        // Update All-Time High Peak
+        if (peakVal > this.state.allTimeHighPeak.val) {
+          this.state.allTimeHighPeak = { freq: peakHz, val: peakVal };
+          this.dom.athPeak.textContent = this.fmtHz(this.state.allTimeHighPeak.freq);
+        }
+
+        let holdBin=0,holdVal=0; for(let i=0;i<N;i++) if(this.state.peakArray[i]>holdVal){holdVal=this.state.peakArray[i]; holdBin=i;}
+        if(holdVal>0){
+          const holdHz=holdBin*fpb; this.dom.fftHoldText.style.display=''; this.dom.fftHoldText.textContent=`Hold: ${this.fmtHz(holdHz)}`;
+          this.drawPeakLine(ctx,this.mapLogX(holdHz,w),w,h,this.colors.hold,true,this.fmtHz(holdHz));
+        }else this.dom.fftHoldText.style.display='none';
+
+        this.drawPeakLine(ctx,this.mapLogX(peakHz,w),w,h,'rgba(100,149,237,.6)');
+        if(this.state.guideFFT) this.drawGuide(ctx,this.state.guideFFT.xPx,h);
+      }
+
+      drawOctave(){
+        const {ctx}=this.canvases.oct; if(!ctx) return;
+        const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        this.drawLogGrid(ctx);
+        if(!this.state.freqArray||!this.state.bands.length) return;
+        const N=this.state.freqArray.length, fpb=this.state.sampleRate/(2*N);
+        const vals=this.state.bands.map(b=>{
+          const s=Math.max(0,Math.floor(b.fl/fpb)), e= Math.min(N-1,Math.ceil(b.fh/fpb));
+          let sum=0,cnt=0; for(let i=s;i<=e;i++){sum+=this.state.freqArray[i]; cnt++;}
+          let v=cnt?(sum/cnt):0; if(this.state.aWeightEnabled) v*=Math.pow(10,this.aWeighting(b.fc)/20); return v;
+        });
+        if(this.state.holdEnabled){for(let i=0;i<vals.length;i++) this.state.peakOct[i]=Math.max(this.state.peakOct[i],vals[i]);}
+        ctx.fillStyle=this.colors.bar;
+        for(let i=0;i<vals.length;i++){
+          const b=this.state.bands[i], xL=this.mapLogX(b.fl,w), xR=this.mapLogX(b.fh,w);
+          const barW=Math.max(2,xR-xL-2); const y=this.mapLinearToYOct(vals[i],h); const barH=(h-this.PAD.B-y);
+          ctx.fillRect(xL+1,y,barW,Math.max(1,barH));
+        }
+        ctx.beginPath();
+        for(let i=0;i<vals.length;i++){const cx=this.mapLogX(this.state.bands[i].fc,w), y=this.mapLinearToYOct(this.state.peakOct[i]||0,h); if(i===0) ctx.moveTo(cx,y); else ctx.lineTo(cx,y);}
+        ctx.save(); ctx.globalAlpha=.45; ctx.strokeStyle=this.colors.hold; ctx.lineWidth=1.5; ctx.stroke(); ctx.restore();
+
+        let idxNow=0,vNow=-1; for(let i=0;i<vals.length;i++) if(vals[i]>vNow){vNow=vals[i]; idxNow=i;}
+        let idxHold=0,vHold=0; for(let i=0;i<this.state.peakOct.length;i++) if(this.state.peakOct[i]>vHold){vHold=this.state.peakOct[i]; idxHold=i;}
+        this.dom.octPeakText.textContent=`Peak: ${this.fmtHz(this.state.bands[idxNow].fc)}`;
+        if(vHold>0){
+          const holdHz=this.state.bands[idxHold].fc; this.dom.octHoldText.style.display=''; this.dom.octHoldText.textContent=`Hold: ${this.fmtHz(holdHz)}`;
+          this.drawPeakLine(ctx,this.mapLogX(holdHz,w),w,h,this.colors.hold,true,this.fmtHz(holdHz));
+        }else this.dom.octHoldText.style.display='none';
+        this.drawPeakLine(ctx,this.mapLogX(this.state.bands[idxNow].fc,w),w,h,'rgba(100,149,237,.6)');
+        if(this.state.guideOCT) this.drawGuide(ctx,this.state.guideOCT.xPx,h);
+      }
+
+      drawHeatmap(force=false){
+        const mainCtx=this.canvases.heatmap.ctx; if(!mainCtx) return;
+        const w=mainCtx.canvas.width/(window.devicePixelRatio||1), h=mainCtx.canvas.height/(window.devicePixelRatio||1);
+        const plotAreaH=h-this.PAD.B;
+        if(!this.state.freqArray||!this.state.heatmapFreqBinMap) return;
+
+        const frame=this.state.heatmapFreqBinMap.map(bin=>{
+          let sum=0,cnt=0; for(let j=bin.binStart;j<=bin.binEnd;j++){sum+=this.state.freqArray[j]; cnt++;}
+          const avgDb=cnt>0?this.dbfs(sum/cnt):-100; return {db:avgDb};
+        });
+
+        let pBin=0,pVal=-Infinity; for(let i=0;i<frame.length;i++){ if(frame[i].db>pVal){pVal=frame[i].db; pBin=i;}}
+        if(pVal> (this.state.athHeatmap.value||-Infinity)) this.state.athHeatmap={value:pVal,bin:pBin};
+
+        const ath=this.state.heatmapFreqBinMap[this.state.athHeatmap.bin];
+        this.dom.heatmapAthText.textContent=ath?'ATH: '+this.fmtHz((ath.fStart+ath.fEnd)/2):'ATH: —';
+
+        this.state.heatmapData.unshift(frame); if(this.state.heatmapData.length>this.HEATMAP_TIME_SLICES) this.state.heatmapData.pop();
+
+        this.drawHeatmapBackground(mainCtx);
+        const timeScale=plotAreaH/this.HEATMAP_TIME_SLICES;
+        for(let i=0;i<this.state.heatmapData.length;i++){
+          const y=i*timeScale, row=this.state.heatmapData[i];
+          for(let j=0;j<row.length;j++){
+            const {fStart,fEnd}=this.state.heatmapFreqBinMap[j];
+            const xL=this.mapLogX(fStart,w), xR=this.mapLogX(fEnd,w);
+            mainCtx.fillStyle=this.mapDbToColorHeatmap(row[j].db);
+            mainCtx.fillRect(xL,y,Math.max(1,xR-xL),timeScale);
+          }
+        }
+        this.drawHeatmapGrid(mainCtx);
+        if(this.state.guideHeatmap) this.drawHeatmapGuide(mainCtx,this.state.guideHeatmap.xPx,h);
+      }
+
+      drawHeatmapBackground(ctx){
+        const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        ctx.clearRect(0,0,w,h);
+      }
+      drawHeatmapGrid(ctx){
+        const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        const plotAreaH=h-this.PAD.B;
+        ctx.strokeStyle=this.colors.frame; ctx.strokeRect(this.PAD.L,0,w-this.PAD.L-this.PAD.R,plotAreaH);
+        ctx.strokeStyle=this.colors.gridV;
+        const ticks=[20,31.5,40,50,63,80,100,125,160,200,250,315,400,500,630,800,1000,2000,4000,8000,16000];
+        ticks.forEach(t=>{const x=this.mapLogX(t,w); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,plotAreaH); ctx.stroke();});
+        ctx.fillStyle=this.colors.label; ctx.font='12px system-ui'; ctx.textBaseline='alphabetic';
+        [31.5,63,125,250,500,1000,2000,4000,8000,16000].forEach(t=>{const x=this.mapLogX(t,w); ctx.fillText(t>=1000?(t/1000)+'k':t,x-8,h-this.LABEL_Y);});
+      }
+      drawHeatmapOverlay(){
+        const ctx=this.canvases.heatmap.ctx; if(!ctx) return;
+        const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        this.drawHeatmapBackground(ctx);
+        ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='24px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText('Heatmap OFF',w/2,(h-this.PAD.B)/2);
+      }
+
+      updateRMS(){
+        if(!this.state.dataArray) return;
+        let sum=0; for(let i=0;i<this.state.dataArray.length;i++){const v=(this.state.dataArray[i]-128)/128; sum+=v*v;}
+        const rms=Math.sqrt(sum/this.state.dataArray.length);
+        this.dom.rms.textContent=(20*Math.log10(rms+1e-12)).toFixed(1);
+      }
+      calculateDba(){
+        if(!this.state.freqArray||!this.state.analyser) return -Infinity;
+        const N=this.state.freqArray.length, fpb=this.state.sampleRate/this.state.analyser.fftSize;
+        let linearSum = 0;
+        for(let i=0; i<N; i++){
+            const f = i * fpb;
+            if (f <= 0) continue;
+            
+            const v = this.state.freqArray[i] / 255;
+            let weightedV = v;
+            if(this.state.aWeightEnabled){
+              const aw = Math.pow(10, this.aWeighting(f) / 20);
+              weightedV *= aw;
+            }
+            linearSum += weightedV * weightedV;
+        }
+        const rms = Math.sqrt(linearSum / N);
+        const dbfs = 20 * Math.log10(rms + 1e-12);
+        return dbfs + this.state.calibrationOffset;
+      }
+      drawDbMeterBackground(){const ctx=this.canvases.dbMeter.ctx; const w=ctx.canvas.width,h=ctx.canvas.height; ctx.clearRect(0,0,w,h);}
+      updateDbMeter(db){
+        const ctx=this.canvases.dbMeter.ctx; const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        const dbMin=0, dbMax=140; const fillW=w*this.clamp01((db-dbMin)/(dbMax-dbMin));
+        const g=ctx.createLinearGradient(0,0,w,0);
+        g.addColorStop(0,this.colors.dbMeter.green);
+        g.addColorStop(0.357,this.colors.dbMeter.green);
+        g.addColorStop(0.571,this.colors.dbMeter.yellow);
+        g.addColorStop(0.714,this.colors.dbMeter.orange);
+        g.addColorStop(0.785,this.colors.dbMeter.red);
+        g.addColorStop(1,this.colors.dbMeter.red);
+        this.drawDbMeterBackground(); ctx.fillStyle=g; ctx.fillRect(0,0,fillW,h);
+      }
+      updateDba(){
+        const val=this.calculateDba(), disp=Math.max(0,val);
+        this.updateDbMeter(disp);
+        if(this.state.dbaValues.length===0){
+          if(disp>0){
+            this.state.dbaValues.push(disp);
+            this.dom.dbRealtimeValue.textContent=`${disp.toFixed(1)}`;
+            this.dom.dbAvgValue.textContent=this.dom.dbMaxValue.textContent=`${disp.toFixed(1)}`;
+            this.state.maxDba=disp;
+          }else{
+            this.dom.dbRealtimeValue.textContent='—'; this.dom.dbAvgValue.textContent='—'; this.dom.dbMaxValue.textContent='—';
+          }
+        }else{
+          this.dom.dbRealtimeValue.textContent=`${disp.toFixed(1)}`;
+          if(disp>this.state.maxDba){this.state.maxDba=disp; this.dom.dbMaxValue.textContent=`${this.state.maxDba.toFixed(1)}`;}
+          if(disp>0){this.state.dbaValues.push(disp); if(this.state.dbaValues.length>100) this.state.dbaValues.shift();}
+          const avg=this.state.dbaValues.reduce((a,b)=>a+b,0)/this.state.dbaValues.length;
+          this.dom.dbAvgValue.textContent=`${avg.toFixed(1)}`;
+        }
+      }
+      resetDbaValues(){this.state.maxDba=-Infinity; this.state.dbaValues=[]; this.dom.dbRealtimeValue.textContent='—'; this.dom.dbAvgValue.textContent='—'; this.dom.dbMaxValue.textContent='—';}
+
+      clearPeak(){
+        // Clear peak hold arrays for FFT and Octave plots
+        this.state.peakArray?.fill(0); 
+        this.state.peakOct?.fill(0);
+        
+        // Clear All-Time High for Heatmap (Spectrogram)
+        this.state.athHeatmap = { value: -Infinity, bin: 0 };
+        this.dom.heatmapAthText.textContent = 'ATH: —';
+
+        // Clear All-Time High for Peak Frequency
+        this.state.allTimeHighPeak = { freq: 0, val: -Infinity };
+        this.dom.athPeak.textContent = '—';
+      }
+      updateOctaveRangeText(){this.dom.octRangeText.textContent=`0–${this.state.octRangeMax}`;}
+      updateHeatmapRangeText(){this.dom.heatmapRangeText.textContent=`-${this.state.heatmapRangeMax} dBFS`;}
+      showError(msg){this.dom.errBox.style.display='block'; this.dom.errMsg.textContent=msg;}
+
+      attachPressGuide({canvas,tip},which){
+        let pressed=false;
+        const getX=(e)=>{const r=canvas.getBoundingClientRect(); const xCss=(e.touches?e.touches[0].clientX:e.clientX)-r.left; return Math.max(this.PAD.L,Math.min(r.width-this.PAD.R,xCss));};
+        const update=(xPx)=>{
+          const freq = this.xToFreq(xPx, canvas.getBoundingClientRect().width);
+          tip.style.display='block'; tip.textContent=this.fmtHz(freq); tip.style.left=xPx+'px'; tip.style.top='8px';
+          const s={xPx,freq}; if(which==='fft') this.state.guideFFT=s; else if(which==='oct') this.state.guideOCT=s; else this.state.guideHeatmap=s;
+        };
+        const clear=()=>{pressed=false; tip.style.display='none'; if(which==='fft') this.state.guideFFT=null; else if(which==='oct') this.state.guideOCT=null; else this.state.guideHeatmap=null;};
+        const onDown=(e)=>{pressed=true; e.preventDefault(); update(getX(e));};
+        const onMove=(e)=>{if(!pressed) return; e.preventDefault(); update(getX(e));};
+        const onUp=()=>clear();
+        canvas.addEventListener('mousedown',onDown); canvas.addEventListener('mousemove',onMove);
+        canvas.addEventListener('mouseup',onUp); canvas.addEventListener('mouseleave',onUp);
+        canvas.addEventListener('touchstart',onDown,{passive:false}); canvas.addEventListener('touchmove',onMove,{passive:false}); canvas.addEventListener('touchend',onUp);
+      }
+
+      applyTheme(themeName){
+        document.documentElement.dataset.theme=themeName;
+        setTimeout(()=>{ this.updateColors(); this.drawInitialFrames(); if(this.state.running){this.drawFFT(); this.drawOctave(); if(this.state.heatmapEnabled) this.drawHeatmap(true);} },0);
+      }
+      
+      // --- Toast helpers ---
+      ensureToast(){
+        if(this._toast) return this._toast;
+        this._toast = document.createElement('div');
+        this._toast.className = 'toast';
+        document.body.appendChild(this._toast);
+        return this._toast;
+      }
+      showToast(msg){
+        const el = this.ensureToast();
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(()=>{ el.classList.remove('show'); }, 1800);
+      }
+updateColors(){
+        this.colors={
+          gridH:getComputedStyle(document.documentElement).getPropertyValue('--gridH').trim(),
+          gridV:getComputedStyle(document.documentElement).getPropertyValue('--gridV').trim(),
+          frame:getComputedStyle(document.documentElement).getPropertyValue('--frame').trim(),
+          label:getComputedStyle(document.documentElement).getPropertyValue('--label').trim(),
+          fft:getComputedStyle(document.documentElement).getPropertyValue('--fft').trim(),
+          peak:getComputedStyle(document.documentElement).getPropertyValue('--peak').trim(),
+          hold:getComputedStyle(document.documentElement).getPropertyValue('--hold').trim(),
+          bar:getComputedStyle(document.documentElement).getPropertyValue('--bar').trim(),
+          heatmap:[
+            getComputedStyle(document.documentElement).getPropertyValue('--heatmap-color-1').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--heatmap-color-2').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--heatmap-color-3').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--heatmap-color-4').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--heatmap-color-5').trim()
+          ],
+          dbMeter:{
+            green:getComputedStyle(document.documentElement).getPropertyValue('--dba-meter-bg-green').trim(),
+            yellow:getComputedStyle(document.documentElement).getPropertyValue('--dba-meter-bg-yellow').trim(),
+            orange:getComputedStyle(document.documentElement).getPropertyValue('--dba-meter-bg-orange').trim(),
+            red:getComputedStyle(document.documentElement).getPropertyValue('--dba-meter-bg-red').trim()
+          }
+        };
+      }
+    }
+
+    new RTAnalyzer();
+  })();
+  </script>
+
+<script>
+(function(){
+  function q(id){ return document.getElementById(id); }
+  window.__ECO_MODE__ = true;
+
+  function textIsOn(el){
+    if(!el) return false;
+    var t=(el.textContent||'').trim().toUpperCase();
+    var pressed=el.getAttribute && el.getAttribute('aria-pressed');
+    return t==='ON' || t==='เปิด' || pressed==='true';
+  }
+  function isHeatmapOn(){
+    var btn=q('btnToggleHeatmap');
+    if(btn) return textIsOn(btn);
+    return false;
+  }
+  function isFFT2048(){
+    var sel=q('fftSizePreset');
+    return sel ? (parseInt(sel.value,10)===2048) : true;
+  }
+  function isOct1of6(){
+    var sel=q('octRes');
+    if(!sel) return true;
+    var v=(sel.value||'')+'';
+    if(v==='6') return true;
+    var opt=sel.options[sel.selectedIndex];
+    var t=opt ? (opt.textContent||'') : '';
+    return /1\s*\/\s*6/i.test(t);
+  }
+  function ecoOK(){ return !isHeatmapOn() && isFFT2048() && isOct1of6(); }
+
+  function paintFab(){
+    var saver=q('fabSaver');
+    if(saver){
+      saver.setAttribute('aria-pressed', window.__ECO_MODE__ ? 'true' : 'false');
+      saver.title = 'Battery Saver: ' + (window.__ECO_MODE__ ? 'ON' : 'OFF');
+    }
+  }
+
+  function ensureHeatmapOff(){
+    try{
+      var btn=q('btnToggleHeatmap');
+      if(btn && (textIsOn(btn))){
+        btn.click();
+        setTimeout(function(){
+          var b=q('btnToggleHeatmap');
+          if(b && (textIsOn(b))){ try{ b.click(); }catch(e){} }
+        }, 30);
+      }
+    }catch(e){}
+  }
+
+  function enforceEco(){
+    ensureHeatmapOff();
+    try{
+      var fs=q('fftSizePreset'); var sl=q('fftRangeSlider');
+      if(fs && fs.value!=='2048'){ fs.value='2048'; fs.dispatchEvent(new Event('change', {bubbles:true})); }
+      if(sl){ sl.value='0'; sl.dispatchEvent(new Event('input', {bubbles:true})); }
+    }catch(e){}
+    try{
+      var os=q('octRes');
+      if(os){
+        var needOk = (os.value==='6');
+        if(!needOk){
+          var opts=os.querySelectorAll('option');
+          for(var i=0;i<opts.length;i++){
+            var t=(opts[i].textContent||opts[i].value||'')+'';
+            if(/1\s*\/\s*6/i.test(t)){ os.value=opts[i].value; needOk=true; break; }
+          }
+          if(needOk){ os.dispatchEvent(new Event('change',{bubbles:true})); }
+        }
+      }
+    }catch(e){}
+  }
+
+  function setEco(on){
+    window.__ECO_MODE__ = !!on;
+    paintFab();
+    if(window.__ECO_MODE__){ enforceEco(); }
+  }
+
+  function hookAutoOff(){
+    function check(){ if(window.__ECO_MODE__ && !ecoOK()){ setEco(false); } }
+    var fs=q('fftSizePreset'); if(fs){ fs.addEventListener('change', check); }
+    var sl=q('fftRangeSlider'); if(sl){ sl.addEventListener('input', function(){ setTimeout(check,0); }); }
+    var os=q('octRes'); if(os){ os.addEventListener('change', check); }
+    var hmb=q('btnToggleHeatmap'); if(hmb){ hmb.addEventListener('click', function(){ setTimeout(check,0); }, true); }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var saver=q('fabSaver');
+    if(saver){
+      saver.addEventListener('click', function(ev){
+        ev.preventDefault(); ev.stopPropagation();
+        setEco(!window.__ECO_MODE__);
+        if(window.__ECO_MODE__){ enforceEco(); }
+      });
+    }
+    setEco(true);
+    enforceEco();
+    hookAutoOff();
+  });
+})();
+</script>
+
+</body>
+</html>
