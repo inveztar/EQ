@@ -192,12 +192,31 @@
       box-shadow: 0 0 8px rgba(165, 180, 252, 0.7);
     }
     
-    [data-theme="cyber-glow"] button,
-    [data-theme="cyber-glow"] .fab[aria-pressed="true"] {
+    /* Apply gradient only to primary buttons */
+    [data-theme="cyber-glow"] .main-controls button:not(.secondary):not(.ghost) {
         background: linear-gradient(90deg, var(--bar-grad-start), var(--bar-grad-end));
         color: #fff;
         border: none;
     }
+
+    /* === FINAL CYBER GLOW FAB RULES === */
+    /* Remove default border on FABs */
+    [data-theme="cyber-glow"] .float-dock .fab {
+        border: none;
+    }
+
+    /* Apply user-selected color and glow to active FABs in Cyber theme */
+    [data-theme="cyber-glow"] .float-dock .fab[aria-pressed="true"] {
+        background: #A78BFA; 
+        color: #fff;
+        box-shadow: 0 0 12px rgba(167, 139, 250, 0.7);
+    }
+
+    /* Add border only when physically pressed down */
+    [data-theme="cyber-glow"] .float-dock .fab:active {
+        border: 1px solid rgba(0, 0, 0, 0.75);
+    }
+
 
     :root{ color-scheme:dark }
     html{ background:var(--bg1) }
@@ -338,7 +357,7 @@
       border-radius:12px; color:#e5e7eb; font-size:20px;
       box-shadow:0 10px 24px rgba(0,0,0,.25);
       cursor:pointer;
-      transition:transform .08s ease, opacity .2s ease, background .2s ease;
+      transition:transform .08s ease, opacity .2s ease, background .2s ease, border .1s ease, box-shadow .2s ease;
     }
     .float-dock .fab:active{ transform:scale(.96); }
     .float-dock .fab:disabled{ opacity:.55; cursor:not-allowed; }
@@ -540,9 +559,9 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         <div class="main-controls">
           <button id="btnStart">▶️ เริ่มวัด</button>
           <button id="btnStop" class="secondary" disabled>⏸️ หยุด</button>
-          <button id="btnHold" class="ghost" aria-pressed="true">📌 Hold Peak: ON</button>
-          <button id="btnClear" class="secondary">♻️ Clear Peak & ATH</button>
-          <button id="btnAweight" class="ghost" aria-pressed="false" title="สลับ A-weighting">A-weighting: OFF</button>
+          <button id="btnHold" class="ghost" aria-pressed="true">📌 Hold: ON</button>
+          <button id="btnClear" class="secondary">♻️ Clear</button>
+          <button id="btnAweight" class="ghost" aria-pressed="false" title="สลับ A-W8">A-W8: OFF</button>
         </div>
 
         <div class="secondary-controls">
@@ -755,9 +774,9 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
   <div class="float-dock" aria-label="Quick controls">
     <button id="fabStart" class="fab" title="เริ่มวัด">▶️</button>
     <button id="fabStop"  class="fab" title="หยุด" disabled>⏸️</button>
-    <button id="fabHold"  class="fab" title="Hold Peak" aria-pressed="true">📌</button>
-    <button id="fabClear" class="fab" title="Clear Peak & ATH">♻️</button>
-    <button id="fabAwt"   class="fab" title="A-weighting" aria-pressed="false">🎧</button>
+    <button id="fabHold"  class="fab" title="Hold" aria-pressed="true">📌</button>
+    <button id="fabClear" class="fab" title="Clear">♻️</button>
+    <button id="fabAwt"   class="fab" title="A-W8" aria-pressed="false">🎧</button>
     <button id="fabSaver" class="fab" title="Battery Saver" aria-pressed="true">🔋</button>
   </div>
 
@@ -931,14 +950,14 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         this.dom.btnHold.addEventListener('click',()=>{
           this.state.holdEnabled=!this.state.holdEnabled;
           this.dom.btnHold.setAttribute('aria-pressed',this.state.holdEnabled);
-          this.dom.btnHold.textContent=`📌 Hold Peak: ${this.state.holdEnabled?'ON':'OFF'}`;
+          this.dom.btnHold.textContent=`📌 Hold: ${this.state.holdEnabled?'ON':'OFF'}`;
           this.syncFloating();
         });
 
         this.dom.btnAweight.addEventListener('click',()=>{
           this.state.aWeightEnabled=!this.state.aWeightEnabled;
           this.dom.btnAweight.setAttribute('aria-pressed',this.state.aWeightEnabled);
-          this.dom.btnAweight.textContent=`A-weighting: ${this.state.aWeightEnabled?'ON':'OFF'}`;
+          this.dom.btnAweight.textContent=`A-W8: ${this.state.aWeightEnabled?'ON':'OFF'}`;
           this.syncFloating();
         });
 
