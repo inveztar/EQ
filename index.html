@@ -113,6 +113,92 @@
       --select-shadow-focus:0 0 0 2px rgba(245, 158, 11, .25);
     }
 
+    
+    /* --- Theme: Cyber Glow --- */
+    [data-theme="cyber-glow"]{
+      --bg1:#0A0E17; --bg2:#101820; --card:#141B2A; --text:#E6EAF2; --muted:#8CA0B3;
+      --gridH:rgba(230,234,242,.10); --gridV:rgba(230,234,242,.05);
+      --frame:rgba(230,234,242,.12); --label:rgba(230,234,242,.92);
+      --fft:#22D3EE; --peak:#A5B4FC; --hold:#F59E0B; --bar:#22D3EE;
+      --heatmap-color-1:#0A0E17; --heatmap-color-2:#2C3A4D; --heatmap-color-3:#22D3EE;
+      --heatmap-color-4:#F472B6; --heatmap-color-5:#F43F5E;
+      --dba-meter-bg-green:#22D3EE; --dba-meter-bg-yellow:#F59E0B;
+      --dba-meter-bg-orange:#FB923C; --dba-meter-bg-red:#F43F5E;
+      --accent-color: transparent; /* Set to transparent to allow gradient */
+
+      /* slider/controls tones */
+      --select-bg:rgba(20,27,42,.55);
+      --select-bg-hover:rgba(20,27,42,.75);
+      --select-border:rgba(255,255,255,.16);
+      --select-border-focus:rgba(167, 139, 250, .70); /* UPDATED to match new accent */
+      --select-shadow:0 2px 8px rgba(0,0,0,.35) inset, 0 0 0 0 rgba(0,0,0,0);
+      --select-shadow-focus:0 0 0 2px rgba(167, 139, 250, .25); /* UPDATED to match new accent */
+
+      /* gradient endpoints (for bars/sliders if app supports via CSS vars) */
+      --bar-grad-start:#66A6FF; /* blue */
+      --bar-grad-end:#FF6BBA;   /* pink */
+    }
+
+    /* --- UPDATED Slider Styles for Cyber Glow --- */
+    [data-theme="cyber-glow"] input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      background: #4A5568; /* Fallback/default track color */
+      outline: none;
+      border-radius: 4px;
+      padding: 0;
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    [data-theme="cyber-glow"] input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: transparent;
+      border-radius: 4px;
+    }
+
+    [data-theme="cyber-glow"] input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: transparent;
+      border-radius: 4px;
+      border: none;
+    }
+
+    [data-theme="cyber-glow"] input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      border: 2px solid var(--card, #141B2A);
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: var(--peak, #A5B4FC);
+      cursor: pointer;
+      margin-top: -5px; /* Center the thumb vertically */
+      box-shadow: 0 0 8px rgba(165, 180, 252, 0.7);
+    }
+
+    [data-theme="cyber-glow"] input[type="range"]::-moz-range-thumb {
+      border: 2px solid var(--card, #141B2A);
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: var(--peak, #A5B4FC);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(165, 180, 252, 0.7);
+    }
+    
+    [data-theme="cyber-glow"] button,
+    [data-theme="cyber-glow"] .fab[aria-pressed="true"] {
+        background: linear-gradient(90deg, var(--bar-grad-start), var(--bar-grad-end));
+        color: #fff;
+        border: none;
+    }
+
     :root{ color-scheme:dark }
     html{ background:var(--bg1) }
     body{
@@ -141,18 +227,21 @@
     .card{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:12px; transition: background-color .3s, border-color .3s;}
 
     /* === toolbar (มุมขวาบนของการ์ด) === */
-    .toolbar{display:flex; align-items:center; gap:12px;}
-    .toolbar .stack{display:flex; align-items:center; gap:8px;}
-    .toolbar label{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted)}
-    .toolbar input[type="range"]{ width:140px; vertical-align:middle; }
+    .toolbar{display:flex; align-items:center; gap:8px; flex-grow: 1; justify-content: flex-end;}
+    .toolbar .stack{display:flex; align-items:center; gap:8px; flex-grow: 1; max-width: 300px;}
+    .toolbar .stack label { flex-shrink: 0; white-space: nowrap; }
+    .toolbar .stack input[type="range"] { flex-grow: 1; min-width: 50px; }
+    .toolbar .stack select { flex-shrink: 0; min-width: 80px; } 
+    .toolbar .stack .hint { flex-shrink: 0; white-space: nowrap; }
 
     .icon-btn{ width:36px; height:32px; padding:0; display:inline-flex; align-items:center; justify-content:center;
       border-radius:10px; font-size:16px; line-height:1; background:rgba(0,0,0,.2); border:1px solid rgba(255,255,255,.12); color:var(--text);}
-    .icon-btn svg{ width:20px; height:20px; pointer-events:none; display:block; }
     .icon-btn[data-active="1"]{ outline:1px solid rgba(255,255,255,.18); }
+    .icon-btn svg { width: 18px; height: 18px; pointer-events: none; display: block; } /* UPDATED icon size */
 
     @media (max-width:480px){
-      .toolbar input[type="range"]{ width:110px; }
+      .card > .row:first-child { flex-wrap: wrap; }
+      .toolbar { flex-basis: 100%; }
       .icon-btn{ width:34px; height:30px; }
     }
 
@@ -201,7 +290,7 @@
     .dbLabel{position:absolute;font-size:10px;color:var(--muted);bottom:4px}
 
     .hint{font-size:12px;color:var(--muted)}
-    .badges{display:flex;justify-content:center;gap:6px;flex:1}
+    .badges{display:flex;justify-content:center;gap:6px;flex-grow: 1;}
     .badge{padding:4px 8px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);font-size:12px;color:#e5e7eb;white-space:nowrap}
     .tip{position:absolute;padding:4px 6px;font-size:12px;color:#e5e7eb;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:8px;transform:translate(-50%,-100%);pointer-events:none;white-space:nowrap;z-index:10}
     .plot{position:relative;height:320px;margin-top:8px}
@@ -210,7 +299,7 @@
     .kv-item{flex:1;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;text-align:center}
     .kv-item b{display:block;color:var(--text);font-size:12px;margin-bottom:4px; font-weight:normal; color:var(--muted);}
     .kv-item span{ font-size:18px; font-weight:600; color:var(--text); }
-    input[type="range"], input[type="checkbox"]{accent-color:var(--accent-color)}
+    input[type="checkbox"]{accent-color:var(--accent-color)}
 
     /* fullscreen fallback */
     .card.is-fullscreen{
@@ -280,15 +369,36 @@
       transform: translateX(-50%) translateY(0);
     }
     
-    /* Calibration controls */
+    /* UPDATED Calibration controls */
+    .calibration-control {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        flex-wrap: nowrap; /* Ensure it stays on one line */
+    }
+    .calibration-control label {
+        flex-shrink: 0;
+    }
+    .calibration-control input[type="range"] {
+        flex-grow: 1;
+        min-width: 80px; /* Allow it to shrink more */
+    }
     .calibration-control .ghost {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         padding: 0;
-        font-size: 18px;
+        font-size: 20px;
         line-height: 1;
         border-radius: 8px;
+        flex-shrink: 0;
     }
+    .calibration-control input[type="number"] {
+        width: 60px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
 
     /* --- Mobile Landscape Fullscreen Fix --- */
     @media (max-width: 920px) and (orientation: landscape) {
@@ -348,6 +458,67 @@
 }
 html.standalone .toolbar{ flex-wrap:wrap; }
 html.standalone .container, html.standalone .wrapper, html.standalone .meters, html.standalone .card{ max-width:100%; overflow-x:clip; }
+
+/* NEW styles for main control card layout */
+.main-card-content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 12px 16px;
+    align-items: center;
+}
+.main-card-content h2 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    margin: 0;
+    align-self: center;
+}
+.main-controls {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+.secondary-controls {
+    grid-column: 1 / -1;
+    grid-row: 2 / 3;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.secondary-controls label[for="smoothing"] {
+    flex: 1 1 200px; /* Allow slider to grow */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.secondary-controls input[type="range"] {
+    flex-grow: 1;
+}
+.dsp-controls {
+    grid-column: 1 / -1;
+    grid-row: 3 / 4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.dsp-options {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.dsp-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -363,168 +534,161 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
     </div>
 
     <div class="card">
-      <div class="row" style="justify-content:space-between;align-items:center;">
-        <h2 style="margin:0 0 4px 0">my RTAs (v  2.0)</h2>
-        <div class="row">
+      <div class="main-card-content">
+        <h2>my RTAs (v 2.0)</h2>
+        
+        <div class="main-controls">
           <button id="btnStart">▶️ เริ่มวัด</button>
           <button id="btnStop" class="secondary" disabled>⏸️ หยุด</button>
           <button id="btnHold" class="ghost" aria-pressed="true">📌 Hold Peak: ON</button>
           <button id="btnClear" class="secondary">♻️ Clear Peak & ATH</button>
           <button id="btnAweight" class="ghost" aria-pressed="false" title="สลับ A-weighting">A-weighting: OFF</button>
         </div>
-      </div>
 
-      <div class="row" style="margin-top:8px">
-        <label> Smoothing <input id="smoothing" type="range" min="0" max="0.95" step="0.01" value="0.75"></label>
-        <label> Averaging <input id="avg" type="checkbox" checked></label>
-      </div>
+        <div class="secondary-controls">
+          <label for="smoothing">Smoothing <input id="smoothing" type="range" min="0" max="0.95" step="0.01" value="0.75"></label>
+          <label>Averaging <input id="avg" type="checkbox" checked></label>
+        </div>
 
-      <div class="row" style="justify-content:space-between;">
-        <div class="row">
-          <label>พยายามปิด DSP ของระบบ:</label>
-          <div class="row">
+        <div class="dsp-controls">
+          <div class="dsp-options">
             <label>echoCancellation <input id="ec" type="checkbox" checked></label>
             <label>noiseSuppression <input id="ns" type="checkbox" checked></label>
             <label>autoGainControl <input id="agc" type="checkbox" checked></label>
           </div>
+          <label>Theme
+            <select id="themeSelector">
+              <option value="dark-matter">Dark Matter</option>
+              <option value="studio-blue" selected>Studio Blue</option>
+              <option value="vintage-amber">Vintage Amber</option>
+              <option value="midnight-neon">Midnight Neon</option>
+              <option value="emerald-gold">Emerald Gold</option>
+              <option value="cyber-glow">Cyber Glow</option>
+            </select>
+          </label>
         </div>
-        <label>Theme
-          <select id="themeSelector">
-            <option value="dark-matter">Dark Matter</option>
-            <option value="studio-blue" selected>Studio Blue</option>
-            <option value="vintage-amber">Vintage Amber</option>
-            <option value="midnight-neon">Midnight Neon</option>
-            <option value="emerald-gold">Emerald Gold</option>
-          </select>
-        </label>
       </div>
     </div>
 
     <div class="meters">
       <!-- FFT -->
       <div class="card" id="fftCard">
-        <div class="row" style="justify-content:space-between;align-items:center;">
-          <div class="row">
-            <b>FFT - </b>
-            <select id="fftYScale">
-                <option value="log" selected>Log</option>
-                <option value="linear">Linear</option>
-            </select>
-          </div>
-          <div class="badges">
-            <span class="badge" id="fftPeakText">Peak: —</span>
-            <span class="badge" id="fftHoldText" style="display:none;">Hold: —</span>
-          </div>
-          <div class="toolbar">
-            <div class="stack">
-              <label>FFT Size
-                <input id="fftRangeSlider" type="range" min="0" max="3" step="1" value="1" aria-label="FFT size preset">
-                <select id="fftSizePreset">
-                  <option value="2048">2048</option>
-                  <option value="4096" selected>4096</option>
-                  <option value="8192">8192</option>
-                  <option value="16384">16384</option>
+        <div class="row" style="justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 16px;">
+            <div class="row" style="flex-shrink: 0;">
+                <b>FFT - </b>
+                <select id="fftYScale">
+                    <option value="log" selected>Log</option>
+                    <option value="linear">Linear</option>
                 </select>
-              </label>
             </div>
-            <button class="ghost icon-btn" id="fsFFT" title="Fullscreen" aria-label="Fullscreen">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 9V5a2 2 0 0 1 2-2h4"/>
-                <path d="M21 9V5a2 2 0 0 0-2-2h-4"/>
-                <path d="M3 15v4a2 2 0 0 0 2 2h4"/>
-                <path d="M21 15v4a2 2 0 0 1-2 2h-4"/>
-              </svg>
-            </button>
-          </div>
+            <div class="badges">
+                <span class="badge" id="fftPeakText">Peak: —</span>
+                <span class="badge" id="fftHoldText" style="display:none;">Hold: —</span>
+            </div>
+            <div class="toolbar">
+                <div class="stack">
+                    <label>FFT Size</label>
+                    <input id="fftRangeSlider" type="range" min="0" max="3" step="1" value="1" aria-label="FFT size preset">
+                    <select id="fftSizePreset">
+                        <option value="2048">2048</option>
+                        <option value="4096" selected>4096</option>
+                        <option value="8192">8192</option>
+                        <option value="16384">16384</option>
+                    </select>
+                </div>
+                <button class="ghost icon-btn" id="fsFFT" title="Fullscreen" aria-label="Fullscreen">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-enter-fs">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-exit-fs" style="display:none;">
+                        <path d="M8 21h3a2 2 0 0 0 2-2v-3m0-6V5a2 2 0 0 0-2-2H8M16 3h-3a2 2 0 0 0-2 2v3m0 6v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                </button>
+            </div>
         </div>
         <div class="plot">
-          <canvas id="fftCanvas"></canvas>
-          <div id="fftTip" class="tip" style="display:none">—</div>
+            <canvas id="fftCanvas"></canvas>
+            <div id="fftTip" class="tip" style="display:none">—</div>
         </div>
       </div>
 
       <!-- Octave -->
       <div class="card" id="octCard">
-        <div class="row" style="justify-content:space-between;align-items:center;">
-          <div class="row">
-            <select id="octRes">
-                <option value="3">1/3</option>
-                <option value="6">1/6</option>
-                <option value="12" selected>1/12</option>
-                <option value="24">1/24</option>
-            </select>
-            <b>Oct</b>
-          </div>
-          <div class="badges">
-            <span class="badge" id="octPeakText">Peak: —</span>
-            <span class="badge" id="octHoldText" style="display:none;">Hold: —</span>
-          </div>
-          <div class="toolbar">
-            <div class="stack">
-              <label>Range
-                <input id="octRangeSlider" type="range" min="64" max="1023" step="1" value="255" aria-label="Octave bar range">
-                <select id="octRangePreset">
-                  <option value="127">127</option>
-                  <option value="255" selected>256</option>
-                  <option value="511">512</option>
+        <div class="row" style="justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 16px;">
+            <div class="row" style="flex-shrink: 0;">
+                <select id="octRes">
+                    <option value="3">1/3</option>
+                    <option value="6">1/6</option>
+                    <option value="12" selected>1/12</option>
+                    <option value="24">1/24</option>
                 </select>
-              </label>
-              <span class="hint" id="octRangeText">0–255</span>
+                <b>Oct</b>
             </div>
-            <button class="ghost icon-btn" id="fsOct" title="Fullscreen" aria-label="Fullscreen">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 9V5a2 2 0 0 1 2-2h4"/>
-                <path d="M21 9V5a2 2 0 0 0-2-2h-4"/>
-                <path d="M3 15v4a2 2 0 0 0 2 2h4"/>
-                <path d="M21 15v4a2 2 0 0 1-2 2h-4"/>
-              </svg>
-            </button>
-          </div>
+            <div class="badges">
+                <span class="badge" id="octPeakText">Peak: —</span>
+                <span class="badge" id="octHoldText" style="display:none;">Hold: —</span>
+            </div>
+            <div class="toolbar">
+                <div class="stack">
+                    <label>Range</label>
+                    <input id="octRangeSlider" type="range" min="64" max="1023" step="1" value="255" aria-label="Octave bar range">
+                    <select id="octRangePreset">
+                        <option value="127">127</option>
+                        <option value="255" selected>256</option>
+                        <option value="511">512</option>
+                    </select>
+                    <span class="hint" id="octRangeText">0–255</span>
+                </div>
+                <button class="ghost icon-btn" id="fsOct" title="Fullscreen" aria-label="Fullscreen">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-enter-fs">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-exit-fs" style="display:none;">
+                        <path d="M8 21h3a2 2 0 0 0 2-2v-3m0-6V5a2 2 0 0 0-2-2H8M16 3h-3a2 2 0 0 0-2 2v3m0 6v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                </button>
+            </div>
         </div>
         <div class="plot">
-          <canvas id="octCanvas"></canvas>
-          <div id="octTip" class="tip" style="display:none">—</div>
+            <canvas id="octCanvas"></canvas>
+            <div id="octTip" class="tip" style="display:none">—</div>
         </div>
       </div>
 
       <!-- Spectrogram -->
       <div class="card" id="heatmapCard">
-        <div class="row" style="justify-content:space-between;align-items:center;">
-          <div class="row">
-            <button id="btnToggleHeatmap" class="ghost" aria-pressed="false">OFF</button>
-            <button id="btnHeatmapQuality" class="ghost" aria-pressed="true">HD</button>
-          </div>
-          <div class="badges">
-            <span class="badge" id="heatmapAthText">ATH: —</span>
-            <button id="btnClearAth" class="ghost" style="font-size:12px;padding:4px 8px; margin-left:4px;">Clear</button>
-          </div>
-          <div class="toolbar">
-            <div class="stack">
-              <label>Range
-                <input id="heatmapRangeSlider" type="range" min="5" max="100" step="5" value="50" aria-label="Heatmap range">
-                <select id="heatmapRangePreset">
-                  <option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="40">40</option>
-                  <option value="50" selected>50</option><option value="60">60</option><option value="80">80</option><option value="100">100</option>
-                </select>
-              </label>
-              <span class="hint" id="heatmapRangeText">-50 dBFS</span>
+        <div class="row" style="justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 16px;">
+            <div class="row" style="flex-shrink: 0;">
+                <button id="btnToggleHeatmap" class="ghost" aria-pressed="false">OFF</button>
+                <button id="btnHeatmapQuality" class="ghost" aria-pressed="true">HD</button>
             </div>
-            <button class="ghost icon-btn" id="fsHeat" title="Fullscreen" aria-label="Fullscreen">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 9V5a2 2 0 0 1 2-2h4"/>
-                <path d="M21 9V5a2 2 0 0 0-2-2h-4"/>
-                <path d="M3 15v4a2 2 0 0 0 2 2h4"/>
-                <path d="M21 15v4a2 2 0 0 1-2 2h-4"/>
-              </svg>
-            </button>
-          </div>
+            <div class="badges">
+                <span class="badge" id="heatmapAthText">ATH: —</span>
+                <button id="btnClearAth" class="ghost" style="font-size:12px;padding:4px 8px; margin-left:4px;">Clear</button>
+            </div>
+            <div class="toolbar">
+                <div class="stack">
+                    <label>Range</label>
+                    <input id="heatmapRangeSlider" type="range" min="5" max="100" step="5" value="50" aria-label="Heatmap range">
+                    <select id="heatmapRangePreset">
+                        <option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="40">40</option>
+                        <option value="50" selected>50</option><option value="60">60</option><option value="80">80</option><option value="100">100</option>
+                    </select>
+                    <span class="hint" id="heatmapRangeText">-50 dBFS</span>
+                </div>
+                <button class="ghost icon-btn" id="fsHeat" title="Fullscreen" aria-label="Fullscreen">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-enter-fs">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-exit-fs" style="display:none;">
+                        <path d="M8 21h3a2 2 0 0 0 2-2v-3m0-6V5a2 2 0 0 0-2-2H8M16 3h-3a2 2 0 0 0-2 2v3m0 6v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                </button>
+            </div>
         </div>
         <div class="plot">
-          <canvas id="heatmapCanvas"></canvas>
-          <div id="heatmapTip" class="tip" style="display:none">—</div>
+            <canvas id="heatmapCanvas"></canvas>
+            <div id="heatmapTip" class="tip" style="display:none">—</div>
         </div>
       </div>
 
@@ -570,12 +734,12 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
       <!-- Calibration -->
       <div class="card">
         <div class="hint" style="flex-basis: 100%; margin-bottom: 4px;">ตั้งค่าออฟเซ็ตเพื่อแปลง dBFS เป็น dB (จากไมค์มือถือ)</div>
-        <div class="row calibration-control" style="justify-content: space-between; align-items: center; flex-wrap: wrap; width: 100%;">
-          <label for="calibrationSlider" style="flex-shrink: 0; margin-right: 8px;">Calibration</label>
+        <div class="row calibration-control">
+          <label for="calibrationSlider">Calibration</label>
           <button class="ghost" id="btnCalibrateMinus">-</button>
-          <input type="range" id="calibrationSlider" min="50" max="150" step="1" value="80" style="flex-grow: 1; min-width: 120px;">
+          <input type="range" id="calibrationSlider" min="50" max="150" step="1" value="80">
           <button class="ghost" id="btnCalibratePlus">+</button>
-          <input type="number" id="calibrationOffset" value="80" style="width: 70px; text-align: center; margin-left: 8px;">
+          <input type="number" id="calibrationOffset" value="80">
         </div>
       </div>
 
@@ -607,6 +771,21 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
     if(isStandalone){ document.documentElement.classList.add('standalone'); }
   }catch(e){}
 })();
+
+    function __getVerticalGradient(ctx, x, y, w, h){
+      try{
+        const theme = document.documentElement?.dataset?.theme || '';
+        if(theme !== 'cyber-glow') return null;
+        const rs = getComputedStyle(document.documentElement);
+        const a = (rs.getPropertyValue('--bar-grad-start') || '#66A6FF').trim();
+        const b = (rs.getPropertyValue('--bar-grad-end') || '#FF6BBA').trim();
+        const g = ctx.createLinearGradient(x, y, x, y + h);
+        g.addColorStop(0, b); // top pink
+        g.addColorStop(1, a); // bottom blue
+        return g;
+      }catch(e){ return null; }
+    }
+    
 </script>
 
 <script>
@@ -668,12 +847,13 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         this.updateOctaveRangeText();
         this.updateHeatmapRangeText();
         this.drawInitialFrames();
+        this.setupCyberGlowSliders(); // Initial setup for sliders
         this.preflight();
       }
 
       getDOMElements(){
-        const ids=['btnStart','btnStop','btnHold','btnClear','btnToggleHeatmap','btnHeatmapQuality',
-          'btnResetDba','btnClearAth','btnStartDemo','btnAweight','fftSizePreset','smoothing','avg',
+        const ids=['btnStart','btnStop','btnHold','btnClear','btnAweight','btnToggleHeatmap','btnHeatmapQuality',
+          'btnResetDba','btnClearAth','btnStartDemo','fftSizePreset','smoothing','avg',
           'ec','ns','agc','themeSelector','fftRangeSlider','fftPeakText','fftHoldText','octPeakText',
           'octHoldText','heatmapAthText','fftCanvas','octCanvas','heatmapCanvas','dbMeterCanvas',
           'fftTip','octTip','heatmapTip','dbRealtimeValue','dbAvgValue','dbMaxValue',
@@ -737,6 +917,7 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         this.state.calibrationOffset = value;
         this.dom.calibrationOffset.value = value;
         this.dom.calibrationSlider.value = value;
+        this.setupCyberGlowSliders(); // Update slider gradient on value change
       }
 
       setupEventListeners(){
@@ -920,36 +1101,54 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         this.dom.fabAwt .setAttribute('aria-pressed', this.state.aWeightEnabled);
       }
 
-      setupFsToggle(btn,card){
-        if(!btn||!card) return;
-        const isActive=()=>document.fullscreenElement===card||document.webkitFullscreenElement===card||card.classList.contains('is-fullscreen');
+      setupFsToggle(btn, card) {
+        if (!btn || !card) return;
+        const iconEnter = btn.querySelector('.icon-enter-fs');
+        const iconExit = btn.querySelector('.icon-exit-fs');
 
-        const showActive=(active)=>{ btn.setAttribute('data-active', active?'1':'0'); };
+        const isActive = () => document.fullscreenElement === card || document.webkitFullscreenElement === card || card.classList.contains('is-fullscreen');
 
-        const enter=async()=>{
-          if(card.requestFullscreen){
-            try{ await card.requestFullscreen({navigationUI:'hide'}); }
-            catch{ card.classList.add('is-fullscreen'); this.mountDock(card); }
-          }else if(card.webkitRequestFullscreen){
-            try{ card.webkitRequestFullscreen(); }
-            catch{ card.classList.add('is-fullscreen'); this.mountDock(card); }
-          }else{
-            card.classList.add('is-fullscreen'); this.mountDock(card);
+        const showActive = (active) => {
+          btn.setAttribute('data-active', active ? '1' : '0');
+          if (iconEnter && iconExit) {
+            iconEnter.style.display = active ? 'none' : 'block';
+            iconExit.style.display = active ? 'block' : 'none';
           }
-          this.handleResize(); showActive(true);
         };
 
-        const exit=async()=>{
-          if((document.fullscreenElement===card || document.webkitFullscreenElement===card) && (document.exitFullscreen || document.webkitExitFullscreen)){
-            try{ (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
-            catch{ card.classList.remove('is-fullscreen'); this.restoreDock(); }
-          }else{
-            card.classList.remove('is-fullscreen'); this.restoreDock();
+        const enter = async () => {
+          if (card.requestFullscreen) {
+            try { await card.requestFullscreen({ navigationUI: 'hide' }); }
+            catch { card.classList.add('is-fullscreen'); this.mountDock(card); showActive(true); this.handleResize(); }
+          } else if (card.webkitRequestFullscreen) {
+            try { card.webkitRequestFullscreen(); }
+            catch { card.classList.add('is-fullscreen'); this.mountDock(card); showActive(true); this.handleResize(); }
+          } else {
+            card.classList.add('is-fullscreen');
+            this.mountDock(card);
+            showActive(true);
+            this.handleResize();
           }
-          this.handleResize(); showActive(false);
         };
 
-        btn.addEventListener('click',()=>{isActive()?exit():enter();});
+        const exit = async () => {
+          if ((document.fullscreenElement === card || document.webkitFullscreenElement === card) && (document.exitFullscreen || document.webkitExitFullscreen)) {
+            try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+            catch { card.classList.remove('is-fullscreen'); this.restoreDock(); showActive(false); this.handleResize(); }
+          } else {
+            card.classList.remove('is-fullscreen');
+            this.restoreDock();
+            showActive(false);
+            this.handleResize();
+          }
+        };
+
+        btn.addEventListener('click', () => { isActive() ? exit() : enter(); });
+        
+        const onFsChange = () => showActive(isActive());
+        document.addEventListener('fullscreenchange', onFsChange);
+        document.addEventListener('webkitfullscreenchange', onFsChange);
+
         showActive(isActive());
       }
 
@@ -1264,7 +1463,15 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
             const y = this.state.fftYScaleIsLog ? this.mapDbToY(this.dbfs(this.state.freqArray[i]),h) : this.mapLinearAmplitudeToY(this.state.freqArray[i], h);
             if(!started){ctx.moveTo(x,y); started=true;} else ctx.lineTo(x,y);
         }
-        ctx.strokeStyle=this.colors.fft; ctx.lineWidth=2; ctx.stroke();
+        {
+          const w = ctx.canvas.width / (window.devicePixelRatio || 1);
+          const h = ctx.canvas.height / (window.devicePixelRatio || 1);
+          const plotH = h - this.PAD.T - this.PAD.B;
+          const grad = __getVerticalGradient(ctx, this.PAD.L, this.PAD.T, w - this.PAD.L - this.PAD.R, plotH);
+          ctx.strokeStyle = grad || this.colors.fft;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
 
         ctx.beginPath(); started=false;
         for(let i=1;i<N;i++){
@@ -1323,7 +1530,12 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         for(let i=0;i<vals.length;i++){
           const b=this.state.bands[i], xL=this.mapLogX(b.fl,w), xR=this.mapLogX(b.fh,w);
           const barW=Math.max(2,xR-xL-2); const y=this.mapLinearToYOct(vals[i],h); const barH=(h-this.PAD.B-y);
-          ctx.fillRect(xL+1,y,barW,Math.max(1,barH));
+          {
+          const gh = Math.max(1, barH);
+          const grad = __getVerticalGradient(ctx, xL+1, y, barW, gh);
+          if(grad) ctx.fillStyle = grad;
+          ctx.fillRect(xL+1, y, barW, gh);
+        }
         }
         ctx.beginPath();
         for(let i=0;i<vals.length;i++){const cx=this.mapLogX(this.state.bands[i].fc,w), y=this.mapLinearToYOct(this.state.peakOct[i]||0,h); if(i===0) ctx.moveTo(cx,y); else ctx.lineTo(cx,y);}
@@ -1423,18 +1635,69 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
         return dbfs + this.state.calibrationOffset;
       }
       drawDbMeterBackground(){const ctx=this.canvases.dbMeter.ctx; const w=ctx.canvas.width,h=ctx.canvas.height; ctx.clearRect(0,0,w,h);}
+      
       updateDbMeter(db){
-        const ctx=this.canvases.dbMeter.ctx; const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
-        const dbMin=0, dbMax=140; const fillW=w*this.clamp01((db-dbMin)/(dbMax-dbMin));
-        const g=ctx.createLinearGradient(0,0,w,0);
-        g.addColorStop(0,this.colors.dbMeter.green);
-        g.addColorStop(0.357,this.colors.dbMeter.green);
-        g.addColorStop(0.571,this.colors.dbMeter.yellow);
-        g.addColorStop(0.714,this.colors.dbMeter.orange);
-        g.addColorStop(0.785,this.colors.dbMeter.red);
-        g.addColorStop(1,this.colors.dbMeter.red);
-        this.drawDbMeterBackground(); ctx.fillStyle=g; ctx.fillRect(0,0,fillW,h);
+        const ctx=this.canvases.dbMeter.ctx; 
+        const w=ctx.canvas.width/(window.devicePixelRatio||1), h=ctx.canvas.height/(window.devicePixelRatio||1);
+        const dbMin=0, dbMax=140; 
+        const fillW=w*this.clamp01((db-dbMin)/(dbMax-dbMin));
+        
+        let g;
+        if (document.documentElement.dataset.theme === 'cyber-glow') {
+            g = ctx.createLinearGradient(0, 0, w, 0);
+            const rs = getComputedStyle(document.documentElement);
+            const startColor = rs.getPropertyValue('--bar-grad-start').trim() || '#66A6FF';
+            const endColor = rs.getPropertyValue('--bar-grad-end').trim() || '#FF6BBA';
+            g.addColorStop(0, startColor);
+            g.addColorStop(1, endColor);
+        } else {
+            g = ctx.createLinearGradient(0,0,w,0);
+            g.addColorStop(0,this.colors.dbMeter.green);
+            g.addColorStop(0.357,this.colors.dbMeter.green);
+            g.addColorStop(0.571,this.colors.dbMeter.yellow);
+            g.addColorStop(0.714,this.colors.dbMeter.orange);
+            g.addColorStop(0.785,this.colors.dbMeter.red);
+            g.addColorStop(1,this.colors.dbMeter.red);
+        }
+
+        this.drawDbMeterBackground(); 
+        ctx.fillStyle=g; 
+        ctx.fillRect(0,0,fillW,h);
       }
+
+      setupCyberGlowSliders() {
+        const sliders = document.querySelectorAll('input[type="range"]');
+        
+        const updateSlider = (slider) => {
+            if (document.documentElement.dataset.theme !== 'cyber-glow') {
+                slider.style.background = ''; // Clear inline style when theme is not cyber glow
+                return;
+            }
+
+            const min = parseFloat(slider.min || 0);
+            const max = parseFloat(slider.max || 100);
+            const val = parseFloat(slider.value);
+            const percentage = (val - min) / (max - min) * 100;
+            
+            const rs = getComputedStyle(document.documentElement);
+            const startColor = rs.getPropertyValue('--bar-grad-start').trim();
+            const endColor = rs.getPropertyValue('--bar-grad-end').trim();
+            const trackColor = '#4A5568'; 
+
+            slider.style.background = `linear-gradient(to right, ${startColor} 0%, ${endColor} ${percentage}%, ${trackColor} ${percentage}%, ${trackColor} 100%)`;
+        };
+
+        sliders.forEach(slider => {
+            if (slider._cyberGlowListener) {
+                slider.removeEventListener('input', slider._cyberGlowListener);
+            }
+            const listener = () => updateSlider(slider);
+            slider._cyberGlowListener = listener;
+            slider.addEventListener('input', listener);
+            updateSlider(slider);
+        });
+      }
+
       updateDba(){
         const val=this.calculateDba(), disp=Math.max(0,val);
         this.updateDbMeter(disp);
@@ -1493,7 +1756,16 @@ html.standalone .container, html.standalone .wrapper, html.standalone .meters, h
 
       applyTheme(themeName){
         document.documentElement.dataset.theme=themeName;
-        setTimeout(()=>{ this.updateColors(); this.drawInitialFrames(); if(this.state.running){this.drawFFT(); this.drawOctave(); if(this.state.heatmapEnabled) this.drawHeatmap(true);} },0);
+        setTimeout(()=>{ 
+            this.updateColors(); 
+            this.drawInitialFrames(); 
+            if(this.state.running){
+                this.drawFFT(); 
+                this.drawOctave(); 
+                if(this.state.heatmapEnabled) this.drawHeatmap(true);
+            }
+            this.setupCyberGlowSliders(); 
+        },0);
       }
       
       // --- Toast helpers ---
